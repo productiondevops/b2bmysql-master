@@ -1,0 +1,249 @@
+{% extends base_template %}
+{% load static %}
+{% block content %}
+
+
+
+<div class=" bg-white card">
+    <h5 class="card-header naqel-bg-color text-white pb-2">Estimated Delivery Duration (EDD)</h5>
+    <div class="card-body">
+
+        <form id="form1" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-6 col-md-1 ">
+                    <div class="form-group">
+                        <label>Date <span class="mandatory"> * </span></label>
+                        {{form.from_date}}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-1 ">
+                    <div class="form-group">
+                        <label>Time <span class="mandatory"> * </span></label>
+                        {{form.time}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-lg-6">
+                    <fieldset class="modal-body">
+                        <p>
+                        <h6>Origin </h3>
+                            </p>
+                            <div class="form-group">
+                                <label>Country <span class="mandatory"> * </span></label>
+                                <select class="form-control form-control-sm" id="OriginCountry" name="OriginCountry"
+                                    aria-describedby="Origin Country" placeholder="Origin Country">
+                                    <option value=""></option>
+                                    {% for entry in countries %}
+                                    <option value="{{ entry.code }}">{{ entry.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>City <span class="mandatory"> * </span></label>
+                                <select class="form-control form-control-sm" id="OriginCity" name="OriginCity"
+                                    aria-describedby="OriginCity" placeholder="OriginCity">
+                                    <option value=""></option>
+
+                                </select>
+                            </div>
+                    </fieldset>
+                </div>
+                <div class="col-lg-6">
+                    <fieldset class="modal-body">
+                        <p>
+                        <h6>Destination </h3>
+                            </p>
+                            <div class="form-group">
+                                <label>Country <span class="mandatory"> * </span></label>
+                                <select class="form-control form-control-sm " id="DestinationCountry"
+                                    name="DestinationCountry" aria-describedby="Destination Country"
+                                    placeholder="Destination Country">
+                                    <option value=""></option>
+                                    {% for entry in countries %}
+                                    <option value="{{ entry.code }}">{{ entry.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>City <span class="mandatory"> * </span></label>
+                                <select class="form-control form-control-sm" id="DestinationCity" name="DestinationCity"
+                                    aria-describedby="DestinationCity" placeholder="Destination City">
+                                    <option value=""></option>
+
+                                </select>
+                               
+                                
+                            </div>
+                    </fieldset>
+                </div>
+
+            </div>
+            <div class="row naqel-text-color">
+                <div class="col-lg-6 col-md-1 ">
+                    <div class="form-group">
+                        <label><b>Service Type</b><span class="required"></span></label>
+                        {{form.serviceType}}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-1 ">
+                    <div class="form-group">
+                        <label>Product Type <span class="required"></span></label>
+                        {{form.productType}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row naqel-text-color">
+                <div class="col-lg-6 col-md-1  ">
+                    <div class="form-group">
+                        <label>Weight <span class="mandatory"> * </span></label>
+                        <input type="number" class="form-control form-control-sm  " id="Weight" name="Weight"
+                            aria-describedby="Weight" placeholder="Weight">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-1   ">
+                    <div class="form-group float-right">
+                        <!-- <button type="button" class="btn btn-secondary  text-white" data-dismiss="modal"
+                            onclick="clearForm()">Clear</button> -->
+
+                              
+                        <button type="submit"  class="btn btn-primary naqel-bg-color text-white"
+                            id="btnSubmit">Submit</button>
+                            <button type="button" class="btn btn-primary naqel-bg-color text-white"
+                            id="btnSubmit" onclick="clearForm()">Clear</button>     
+                       
+                    </div>
+                </div>
+                
+
+            </div>
+        </form>
+        <br><br>
+        <div class="modal-footer">
+            <div class="row modal-body">
+                <span id="returnMessage" title="MY ERROR" style="color:red;">
+                </span>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        function onSubmit() {
+
+        }
+        function clearForm() {
+            $("#form1").trigger('reset');
+            $("#returnMessage").text("");
+        }
+
+
+        $("#OriginCountry").change(function (e) {
+            const country_code = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+            // GET AJAX request
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'home:validate_checkCities' %}",
+                data: { "country_code": country_code },
+                success: function (response) {
+                    var data = response["cities"];
+                    let html_data = '<option value=""></option>';
+                    if (data.length > 0) {
+                        $.each(data, function (key, item) {
+                            html_data += `<option value="${item.code}">${item.name}</option>`
+                        });
+                    }
+                    $("#OriginCity").html(html_data)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        });
+        $("#DestinationCountry").change(function (e) {
+            const country_code = $(this).val();  // get the selected subject ID from the HTML dropdown list 
+            // GET AJAX request
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'home:validate_checkCities' %}",
+                data: { "country_code": country_code },
+                success: function (response) {
+                    var data = response["cities"];
+                    let html_data = '<option value=""></option>';
+                    if (data.length > 0) {
+                        $.each(data, function (key, item) {
+                            html_data += `<option value="${item.code}">${item.name}</option>`
+                        });
+                    }
+                    $("#DestinationCity").html(html_data)
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        });
+
+        $("#form1").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            var isValid = true;
+            var _Date = $('#Date').val(), _Time = $('#Time').val(), _OriginCountry = $('#OriginCountry').val(),
+                _OriginCity = $('#OriginCity').val(), _DestinationCountry = $('#DestinationCountry').val(),
+                _DestinationCity = $('#DestinationCity').val(), _ServiceType = $('#ServiceType').val(), _ProductType = $('#ProductType').val(),
+                _Weight = $('#Weight').val();
+
+
+
+            if (_Date == '' || _Time == '' || _OriginCountry == '' || _OriginCity == '' || _DestinationCountry == '' || _DestinationCity == '' || _ServiceType == '' || _ProductType == '' || _Weight == '') {
+                isValid = false;
+            }
+            if (isValid) {
+
+                var serializedData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'home:save_edd' %}",
+                    data: serializedData,
+                    success: function (response) {
+
+                        $("#form1").trigger('reset');
+
+                        var expectedDate = formatDate(addDays(_Date, 6));
+
+                        $("#returnMessage").text("our order will be delivered in 6 days. Estimated delivery date: " + expectedDate);
+
+                        setTimeout(function () {
+                            $("#returnMessage").text('')
+                        }, 3000);
+                    },
+                    error: function (response) {
+                        // alert the error if any error occured
+                        alert(response);
+                    }
+                })
+            }
+            else {
+                alert('Please fill all required information')
+            }
+        })
+
+
+        function formatDate(date) {
+            return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+        }
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+    </script>
+
+    {% endblock %}

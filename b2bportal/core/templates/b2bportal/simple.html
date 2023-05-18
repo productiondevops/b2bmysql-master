@@ -1,0 +1,45 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+{% block content %}
+
+<form  method="post">
+    {% csrf_token %}
+    {% if messages %}
+    <div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="md-form">
+        <i class="fa fa-user prefix deafult-text" ></i>
+        {{form.username}}
+        <label for="id_username">Email Address:</label>
+      </div>
+      <div class="md-form">
+        <i class="fa fa-user prefix dark-black"></i>
+        {{form.password}}
+         
+        <label for="id_password">Password:</label>
+      </div>
+
+    <div class="text-center" style="margin-bottom: 12px;">
+        <div class="text-left"><a  target="_blank" href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerForgetPassword.aspx">Forgot/Reset Password</a>
+        </div>
+        <!-- <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe">Remember me</label> -->
+    <br><br>
+    <button  class="red-gradient header_btn white-text cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-squar " type="submit" ><span class="text-white">Login</span></button>
+        
+        <hr>
+        <div class="text-left black-text" >Not Registered? <a class="red-text pr-4"
+                                                           href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerForgetPassword.aspx">Register Now
+            </a>
+        
+
+    </div>
+</form>
+ 
+{% endblock %}

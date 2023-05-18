@@ -1,0 +1,122 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 07/07/2020 08:48
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-logistics:before { content: "\f100"; }
+.flaticon-location:before { content: "\f101"; }
+.flaticon-vessel:before { content: "\f102"; }
+.flaticon-forklift:before { content: "\f103"; }
+.flaticon-open:before { content: "\f104"; }
+.flaticon-worldwide-shipping:before { content: "\f105"; }
+.flaticon-plane:before { content: "\f106"; }
+.flaticon-airplane:before { content: "\f107"; }
+.flaticon-travel:before { content: "\f108"; }
+.flaticon-airport:before { content: "\f109"; }
+.flaticon-yacht:before { content: "\f10a"; }
+.flaticon-fishing-boat:before { content: "\f10b"; }
+.flaticon-vessel-1:before { content: "\f10c"; }
+.flaticon-container:before { content: "\f10d"; }
+.flaticon-boxes:before { content: "\f10e"; }
+.flaticon-air-freight:before { content: "\f10f"; }
+.flaticon-shipping:before { content: "\f110"; }
+.flaticon-delivery:before { content: "\f111"; }
+.flaticon-truck:before { content: "\f112"; }
+.flaticon-shipping-1:before { content: "\f113"; }
+.flaticon-call:before { content: "\f114"; }
+.flaticon-email:before { content: "\f115"; }
+.flaticon-email-1:before { content: "\f116"; }
+.flaticon-pin:before { content: "\f117"; }
+.flaticon-location-1:before { content: "\f118"; }
+.flaticon-world:before { content: "\f119"; }
+.flaticon-remote:before { content: "\f11a"; }
+.flaticon-hook:before { content: "\f11b"; }
+.flaticon-warehouse:before { content: "\f11c"; }
+.flaticon-shipping-2:before { content: "\f11d"; }
+.flaticon-cargo-ship:before { content: "\f11e"; }
+.flaticon-delivery-truck:before { content: "\f11f"; }
+.flaticon-launch:before { content: "\f120"; }
+.flaticon-delivery-truck-1:before { content: "\f121"; }
+.flaticon-delivery-truck-2:before { content: "\f122"; }
+.flaticon-fast-delivery:before { content: "\f123"; }
+.flaticon-push-cart:before { content: "\f124"; }
+.flaticon-import:before { content: "\f125"; }
+.flaticon-export:before { content: "\f126"; }
+.flaticon-forklift-1:before { content: "\f127"; }
+.flaticon-conveyor:before { content: "\f128"; }
+    
+    $font-Flaticon-logistics: "\f100";
+    $font-Flaticon-location: "\f101";
+    $font-Flaticon-vessel: "\f102";
+    $font-Flaticon-forklift: "\f103";
+    $font-Flaticon-open: "\f104";
+    $font-Flaticon-worldwide-shipping: "\f105";
+    $font-Flaticon-plane: "\f106";
+    $font-Flaticon-airplane: "\f107";
+    $font-Flaticon-travel: "\f108";
+    $font-Flaticon-airport: "\f109";
+    $font-Flaticon-yacht: "\f10a";
+    $font-Flaticon-fishing-boat: "\f10b";
+    $font-Flaticon-vessel-1: "\f10c";
+    $font-Flaticon-container: "\f10d";
+    $font-Flaticon-boxes: "\f10e";
+    $font-Flaticon-air-freight: "\f10f";
+    $font-Flaticon-shipping: "\f110";
+    $font-Flaticon-delivery: "\f111";
+    $font-Flaticon-truck: "\f112";
+    $font-Flaticon-shipping-1: "\f113";
+    $font-Flaticon-call: "\f114";
+    $font-Flaticon-email: "\f115";
+    $font-Flaticon-email-1: "\f116";
+    $font-Flaticon-pin: "\f117";
+    $font-Flaticon-location-1: "\f118";
+    $font-Flaticon-world: "\f119";
+    $font-Flaticon-remote: "\f11a";
+    $font-Flaticon-hook: "\f11b";
+    $font-Flaticon-warehouse: "\f11c";
+    $font-Flaticon-shipping-2: "\f11d";
+    $font-Flaticon-cargo-ship: "\f11e";
+    $font-Flaticon-delivery-truck: "\f11f";
+    $font-Flaticon-launch: "\f120";
+    $font-Flaticon-delivery-truck-1: "\f121";
+    $font-Flaticon-delivery-truck-2: "\f122";
+    $font-Flaticon-fast-delivery: "\f123";
+    $font-Flaticon-push-cart: "\f124";
+    $font-Flaticon-import: "\f125";
+    $font-Flaticon-export: "\f126";
+    $font-Flaticon-forklift-1: "\f127";
+    $font-Flaticon-conveyor: "\f128";

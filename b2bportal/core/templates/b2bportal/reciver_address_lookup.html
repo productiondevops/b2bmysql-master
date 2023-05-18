@@ -1,0 +1,27 @@
+    <div class="modal-content">
+        <div class="modal-header">
+            <form class="form-inline">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <center>Receiver Address</center>
+                </h5>
+                <div id="search_reciver_div" class="input-group">
+                    <input class="form-control ml-4" style="width: 500px" name="search_reciver_data" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button type="button" name="btn_search" hx-post="/reciver-address-lookup/" hx-target="#reciver_address" hx-include="#search_reciver_div" class="btn text-white my-2 my-sm-0" type="submit"><i class="fa fa-search mr-2"></i>Search</button>
+                    </div>
+                </div>
+            </form>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table id="reciver_address" class="table table-hover table-striped">
+                {{address_data}}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>

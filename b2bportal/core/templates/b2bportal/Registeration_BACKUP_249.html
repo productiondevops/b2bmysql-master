@@ -1,0 +1,181 @@
+{% extends "Shared/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .reg.card {
+  margin-top: 160px;
+  margin-bottom: 90px;
+  padding: 1.5em 0.5em 0.5em;
+  border-radius: 2em;
+  text-align: left;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  line-height: 0px;
+  opacity: .9;
+}
+.form-outline select {
+  -webkit-appearance:auto;
+
+
+}
+
+
+.b2bform{
+margin-bottom: 0px !important;
+margin-top: 0px;
+}
+.btn-success {
+    color: #fff;
+    background-color: #06205c;
+    border-color: #06205c;
+    padding: 0.5px 20px;
+    margin: 100px;
+    float: right;
+
+}
+
+
+.h3 {
+  font-size: 25px;
+    line-height: 44px;
+    font-weight: 700;
+}
+.btn-success:hover {
+  background-color:firebrick;
+
+
+}
+
+</style>
+
+
+<section class="h-100 h-custom" style="background:url('{% static 'images/BackGround.jpg' %}')  no-repeat center center fixed; background-size:cover;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-left align-items-left h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="reg card rounded-3">
+
+            <div class="reg card-body p-4 p-md-5">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4310a62b901c87b913e46a4f7fd8a9f9fbc6c82d
+              {% if form.errors %}
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-danger">
+<<<<<<< HEAD
+                    {{ form.non_field_errors }}
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+                <div class="title-header">
+                    <h3 class="title Naqelbluecolor">Fill your information </h2>
+=======
+                    {{ form.non_field_errors }}                  
+                  </div>
+>>>>>>> 4310a62b901c87b913e46a4f7fd8a9f9fbc6c82d
+                </div>
+              </div>
+              {% endif %}            
+
+            <div class="title-header">
+                <h3 class="title Naqelbluecolor">Fill your information </h2>
+            </div>
+
+              <form class="px-md-2" method="POST" enctype="multipart/form-data">
+                <!-- <div class="md-form">
+                  <i class="fa fa-phone prefix white-text"></i>
+                  {{form.username}}
+                  {% if form.username.errors %}
+                  <p class="text-danger"> {{form.username.errors}} </p>
+                  {%endif%}
+                </div> -->
+                {% csrf_token %}
+
+                <div class="form-outline">
+
+                  {{form.ComName}}
+                  <!-- <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Company Name" required/> -->
+                  <label class="form-label" for="form3Example1q"></label>
+
+                </div>
+                <div class="form-outline ">
+                  {{form.CustomerName}}
+
+                    <!-- <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Customer Name" required/> -->
+                    <label class="form-label" for="form3Example1q"></label>
+                </div>
+                  <!--<div class="form-outline ">
+                    <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Industry Type" required/>
+                    <label class="form-label" for="form3Example1q"></label>
+                  </div> -->
+                  <div class="form-outline select ">
+                    {{form.IndType}}
+                  <label class="form-label"  for="form3Example1q"></label>
+
+                    <!-- <select  id="form3Example1q">
+                        <option value=""disabled selected>Industry Type</option>
+                        <option value="Cloths">Cloths</option>
+                        <option value="Food">Food</option>
+                        <option value="Spare parts">Spare parts</option>
+                        <option value="Business">Business</option>
+                    </select> -->
+                  </div>
+                  <div class="form-outline ">
+                    {{form.MoNumber}}
+                    <!-- <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Mobile Number" required/> -->
+                    <label class="form-label" for="form3Example1q"></label>
+                  </div>
+                  <div class="form-outline ">
+                    {{form.Email}}
+                    <!-- <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Email" required/> -->
+                    <label class="form-label" for="form3Example1q"></label>
+                  </div>
+                  <div class="form-outline ">
+                    {{form.Address}}
+                    <!-- <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Address" /> -->
+                    <label class="form-label" for="form3Example1q"></label>
+                  </div>
+                  <!--<div class="form-outline ">
+                    <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="City" />
+                    <label class="form-label" for="form3Example1q"></label>
+                  </div> -->
+                  <div class="form-outline select ">
+                    {{form.City}}
+                    <label placeholder="City" for="form3Example1q"></label>
+                    <!-- <select  id="form3Example1q">
+                        <option value=""disabled selected>City</option>
+                        <option value="Riyadh">Riyadh</option>
+                        <option value="Jeddah">Jeddah</option>
+                        <option value="Dammam">Dammam </option>
+                    </select> -->
+                  </div>
+                  <!--<div class="form-outline ">
+                    <input type="text" id="form3Example1q" class="form-control b2bform" placeholder="Country" />
+                    <label class="form-label" for="form3Example1q"></label>
+                  </div>-->
+                  <div class="form-outline select ">
+                    {{form.Country}}
+                    <label placeholder="Country" for="form3Example1q"></label>
+                    <!-- <select  id="form3Example1q">
+                        <option value=""disabled selected>Country</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="China">China</option>
+                        <option value="UAE">UAE </option>
+                    </select> -->
+                  </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}

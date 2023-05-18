@@ -1,0 +1,111 @@
+<form hx-post="/dimensions/" hx-target="#button_dimension" hx-swap="innerHTML" class="show">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        </div>
+        <div class="modal-body">
+            <div class="row col-md-12">
+                <!-- STEP 1 -->
+                <div class=" card col-lg-2 pt-1">
+                    Step1
+                    <p class="form-control-sm">How many pieces (parcels)?</p>
+                    <div class="col-lg-4">
+                        <!-- <label for="nameVariable" class="form-label"> Pieces:</label> -->
+                    </div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class=" card col-lg-6 pt-1">
+                    Step-2
+                    <p>Fill in the Dimensions(L,W,H) per each parcel</p>
+                    <!-- <div class="col-lg-4 pt-1 ">
+                        <label for="nameVariable" class="form-label form-inline">Lenght:</label>
+                    </div>     -->
+
+                </div>
+                <!-- <div class="col-lg-4 pt-1 mr-3">
+                    {{form.length}}
+                </div> -->
+                <!-- STEP 3 -->
+                <div class="card col-lg-4 pt-1">
+                    Step-3
+                    <p>Fill in the gross weight</p>
+                    <!-- <div class="col-lg-4 pt-1 ">
+                        <label for="nameVariable" class="form-label">Gross.Wt:</label>
+                    </div> -->
+                    <!-- <div class="col-lg-4 pt-1 mr-3">
+                    {{form.length}}                    
+                    </div> -->
+                </div>
+
+            </div>
+            <div class="row col-md-12" id="tab">
+                <div class="card col-lg-2 pt-1">
+                    {{form.pieces}}
+                </div>
+                <div class="card col-lg-2 pt-1" onchange="myVolUpdate()">
+                    {{form.length}}
+                </div>
+                <div class="card col-lg-2 pt-1" oncanplaythrough="myVolUpdate()">
+                    {{form.width}}
+                </div>
+                <div class="card col-lg-2 pt-1" onchange="myVolUpdate()">
+                    {{form.height}}
+                </div>
+                <div class="card col-lg-1 pt-1">
+                    {{form.vol_weight}}
+                </div>
+                <div class="card col-lg-1 pt-1">
+                    {{form.gross_weight}}
+                </div>
+                <div class="card col-lg-2 pt-1">
+                    {{form.chargable_weight}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row col-md-12">
+                <div class="col-lg-1">
+                    {{form.know_my_dimension}}
+                </div>
+                <div class="col-lg-4 ">
+                    <label for="check1">I know the dimensions of my Shipment</label>
+                </div>
+
+            </div>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" onclick="closeModal()">Save changes</button>
+            <button type="button" class="btn btn-primary" onclick="add()"><i class="fa fa-plus"></i> Add Another</button>
+        </div>
+    </div>
+</form>
+
+
+<style>
+    .card label {
+        font-size: 0.9000em !important;
+        margin-bottom: 5px !important;
+        color: #06205C !important;
+    }
+</style>
+<script>
+    function myVolUpdate() {
+        var height = $('#id_height').val();
+        var width = $('#id_width').val();
+        var length = $('#id_length').val();
+        var volWeight = ((height * width * length) / 5000)
+        $('#id_vol_weight').val(volWeight);
+    }
+    function add() {
+        $("#tab").append("<div class='row col-md-12 m-0' id='tab'><div class='card col-lg-2 pt-1'><input type='text' name='pieces' class='form-control form-control-sm' placeholder='Pieces' maxlength='50' id='id_pieces'></div> <div class='card col-lg-2 pt-1' onchange='myVolUpdate()'><input type='number' name='length' placeholder='Length' step='any' id='id_length'></div><div class='card col-lg-2 pt-1' oncanplaythrough='myVolUpdate()'><input type='number' name='width' placeholder='Width' step='any' id='id_width'></div><div class='card col-lg-2 pt-1' onchange='myVolUpdate()'><input type='number' name='height' placeholder='Height' step='any' id='id_height'></div><div class='card col-lg-1 pt-1'><input type='number' name='vol_weight' placeholder='Vol.Wt' step='any' id='id_vol_weight'></div><div class='card col-lg-1 pt-1'><input type='number' name='gross_weight' placeholder='Gross Weight' step='any' id='id_gross_weight'></div> <div class='card col-lg-2 pt-1'><input type='number' name='chargable_weight' placeholder='Chargable Weight' step='any' id='id_chargable_weight'></div></div>");
+    }
+
+    function closeModal() {
+	var container = document.getElementById("button_dimension")
+	
+	var modal = document.getElementById("modal")
+
+	modal.classList.remove("show")
+}
+
+</script>

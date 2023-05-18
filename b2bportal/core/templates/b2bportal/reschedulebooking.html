@@ -1,0 +1,85 @@
+<div class="modal-content naqel-gray-official" style="width: 75.0em">
+    <form  id="reschedulebookingForm"  hx-post="/reschedulebooking/{{booking.pk}}">
+            {% csrf_token %}
+        <div class="modal-header" style="background-color:#06205C; height: 80px; margin-top: -3px;">
+            <h5 class="modal-title" style="color:#E0E0E0;" id="exampleModalLabel"><center>Reschedule Booking</center></h5>
+            <button type="button" class="close" style="color: #E0E0E0; margin-top: -60px;" data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      
+        <div class="container style="background-color="#06205C">
+            <div class="row naqel-gray-official">
+                <div class="col-sm" style="height: 150px; width: 50;">
+                    <center><b> Booking RefNo: {{booking.bookingref}}</b></center>
+                    <div class="row">
+    
+                        <div class="col-md-4 p-2">
+                           
+
+                          <label for="form3Example1q"class="required-re" class="form-label">Pick Up Date</label>
+                          <span class="text-blue">{{ form.pickup_date }}</span>
+                          {% for error in form.pickup_date.errors %}
+                          <p class="text-danger">{{ error }}</p>
+                          {% endfor %}
+                        </div>
+    
+                          <div class="col-md-2 p-2">
+                            <label for="form3Example1q"class="required-re" class="form-label">From</label>
+                            <span class="text-input">{{ form.pickup_time }}</span>
+                            {% for error in form.pickup_time.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}                           </div>
+    
+                        <div class="col-md-2 p-2">
+                          <label for="form3Example1q"class="required-re" class="form-label">To</label>
+                          <span class="text-input">{{ form.OfficeUpto }}</span>
+                          {% for error in form.OfficeUpto.errors %}
+                          <p class="text-danger">{{ error }}</p>
+                          {% endfor %}                            </div>
+    
+                          <div class="col-md-4 p-2">
+                            <label for="form3Example1q"class="required-re" class="form-label">Reason</label>
+                            <span class="text-input">{{ form.SchedulingReason }}</span>
+                          {% for error in form.SchedulingReason.errors %}
+                          <p class="text-danger">{{ error }}</p>
+                          {% endfor %}
+                          </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer p-2">
+            <button type="button" class="btn btn-primary " data-dismiss="modal">Back</button>
+            <button type="submit" id="Reschsubmit" name ="Reschsubmit" class="btn btn-primary" >Subimt</button>
+     
+        </div>
+    </form>
+    </div>
+    
+    
+    <style>
+        .naqel-gray-official{
+         background-color: #E0E0E0;
+    
+        }
+    
+        h5 {
+            text-align: left;
+        }
+    
+        .center {
+            text-align: center;
+            width: 100%;
+        }
+    
+        ul {
+            width: 100%;
+        }
+    </style>
+    <script>
+        $('.carousel').carousel({
+            interval: 0
+        })
+    </script>

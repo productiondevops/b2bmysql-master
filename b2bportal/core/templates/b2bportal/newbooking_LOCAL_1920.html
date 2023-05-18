@@ -1,0 +1,780 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="modal-content naqel-bg-gray">
+    <!-- style="overflow:scroll; width:400px;height: 650px;" -->
+    <div class="modal-header">
+        <h5 class="modal-title naqel-bg-color text-white pl-1" id="exampleModalLabel">Shipper ({% if booking == 0 %} New Booking {% else %} {{booking}} {%endif%})</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+    </div>
+    <form id="form1" action="" method="post">
+        {% csrf_token %}
+        <div class=" p-3">
+
+            <div class="row naqel-text-color">
+                <div class="col-sm">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Company Name</b>
+                            {{company.company_name}}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Account Number</b>
+                            {{company.account_number}}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Mobile Number</b>
+                            {{company.phone_number}} 
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Country</b>
+                            {{company.country}}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Origin</b>
+                            {{company.city}}
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <b>Location</b>
+                            <span>Riyadh</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="text-bold-front col-sm"> 
+                    <div  class="control-group">
+                        <label class="control-label naqel-text-color required">Shipper Contact &nbsp;</label>
+                        <div class="controls">
+                            {{form.shipper}}
+                        </div>
+                    </div>
+                </div>
+                <div class="text-bold-front col-sm"> 
+                    <div  class="control-group">
+                        <label class="control-label naqel-text-color required">Contact No &nbsp;</label>
+                        <div class="controls">
+                            {{form.contact_number}}
+                        </div>
+                    </div>
+                </div>
+  
+            </div> 
+            {{formset.management_form }}
+            <div id="form_set">
+
+                {% for form in formset.forms %}
+                {{form.non_field_errors}}
+                {{form.errors}}
+                <table class='no_error'>
+
+                    {% crispy form %}
+                </table>
+
+                {% endfor %}
+
+
+            </div>
+
+            <div id="empty_form" style="display:none">
+                <table class='no_error'>
+
+                    {% crispy formset.empty_form %}
+                </table>
+            </div>
+ 
+            <div class="row pt-1">
+                <div class="naqel-bg-color text-white col-12 col-md-12 ">
+                    <div>
+                        <h5>Shipment Details</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="row naqel-text-color p-1 bg-naqel-gray">
+                <div class="col-lg-4 col-md-1 pl-4">
+                    <div class="column">
+                        <label for="exampleInputEmail1" class="required"><b>Shipment Type&nbsp;</b></label>
+                        {{form.shipment_type}}
+                    </div>
+                    <div class="column">
+                        <label for="exampleInputEmail1" class="required"><b>Billing Type&nbsp;</b></label>
+                        {{form.billing_type}}
+                    </div>
+                    <div class="column">
+                        <label for="exampleInputEmail1" class="required"><b>Shipping Instruction&nbsp;</b></label>
+                        {{form.shiping_instruction}}
+    
+                        </span>
+                    </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-1 required">
+                            <b>Height</b>
+                            </div>
+                            <div class="col-lg-4 col-md-1 required">
+                            <b>Width</b>
+                            </div>
+                            <div class="col-lg-4 col-md-1 required">
+                            <b>Length</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-1" onchange="myVolUpdate()">
+                                {{form.height}}
+                            </div>
+                            <div class="col-lg-4 col-md-1" onchange="myVolUpdate()">
+                                {{form.width}}
+                            </div>
+                            <div class="col-lg-4 col-md-1 " onchange="myVolUpdate()">
+                                {{form.length}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-1 required">
+                            <b>Volume</b>
+                            </div>
+                            <div class="col-lg-4 col-md-1 required">
+                                <b>Act.Weight</b>
+                            </div>
+                            <div class="col-lg-4 col-md-1 required">
+                                <b>Piece Count</b>
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-1">
+                                {{form.vol_weight}}
+                            </div>
+                            <div class="col-lg-4 col-md-1">
+                                {{form.weight}}
+                            </div>
+                            <div class="col-lg-4 col-md-1">
+                                {{form.piece_count}}
+                            </div>
+                        </div>
+                        <!-- <div class="column">
+                            <label><b>Insurance</b></label>
+                            {{form.insurance}}
+                        </div> -->
+                </div>
+                <div class="col-lg-4 col-md-1">
+                    <div class="column">
+                        <div class="form-group p-5">
+                            <img src="{% static 'b2b/assets/img/3dvolume.png' %}">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-1">
+
+                    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker"
+                    inline="true">
+                    <label class="required"><b>Pickup Date&nbsp;</b></label>
+                    {{form.pickup_date}}
+                </div>
+                <div class="column clockpicker">
+                    <label for="exampleInputEmail1" class="required"><b>Pickup Time&nbsp;</b></label>
+                    {{form.pickup_time}}
+
+                    </span>
+                </div>
+                <div class="column">
+                    <label for="exampleInputEmail1" class="required"><b>Pickup Point &nbsp;</b></label>
+                    {{form.pickup_point}}
+
+                    </span>
+                </div>
+                </div>
+            </div>             
+                <div class="col-lg-12 col-md-1 text-naqel-blue">
+                <div class="check_div">
+                <input type="checkbox" id="check1" name="check1" value="00">
+                <label for="check1"><b>Insurance</b></label><br>
+                </div>
+                <div class="heynow1_div">
+                </div>
+                <div class="heynow2_div">
+                <label for="heynow2" ><b>{{form.insurance}}</b></label>
+                <label for="heynow2" ><b>{{form.declare_value}}</b></label>
+                <label for="heynow2" ><b>{{form.cust_national_id}}</b></label>
+                </div>
+                </div>
+               
+
+            <!-- <div class="row">
+                <small><button type="button" id="add_more" class="btn naqel-bg-color text-white float-right"><i
+                            class="fa fa-plus fa-1x"></i>Add More Consignee</button></small>
+            </div> -->
+            <div class="modal-footer">
+                
+                <!-- <button type="button" class="btn naqel-bg-blue text-white">Add Consignee</button> -->
+                <button type="button"  class="btn naqel-bg-color  text-white" onclick="onSubmitBack()">Back</button>
+                <button type="button" class="btn naqel-bg-green text-white" onclick="onSubmit()">Submit</button>
+                
+            </div>
+            <div></div>
+           
+            <div class="float-right mt-5" >
+                <input type="hidden" name="booking_id" value="{{booking}}"/>
+                
+                <input type="hidden" name="pintoservice" value="0"/>
+                <input type="checkbox" name="pintoservice" value="1"
+                hx-post="/add-to-favourite/" hx-trigger="change"
+                ><b class="text-naqel-blue"> Pin to Favourite</b></input>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
+<style>
+    body {
+        overflow: hidden;
+    }
+
+    .naqel-bg-green {
+        background-color: green;
+    }
+
+    .naqel-bg-warning {
+        background-color: orange;
+    }
+
+    .naqel-bg-blue {
+        background-color: blue;
+    }
+
+    .naqel-bg-gray {
+        background-color: rgb(235, 236, 241);
+    }
+
+    h5 {
+        text-align: left;
+    }
+
+    .modal-title {
+        margin-bottom: 0;
+        line-height: 2.5;
+    }
+  .required:after {
+    content:"*";
+    color: red;
+  }
+</style>
+{% endblock %}
+
+<style>
+    h5 {
+        text-align: left;
+    }
+
+    .center {
+        text-align: center;
+        width: 100%;
+    }
+
+    i {
+        color: #06205C;
+    }
+
+    
+    
+</style>
+
+
+<!-- <script>
+function postdata(obj,ctype)
+        {   
+            id=$(obj).attr("id")
+            data=$(obj).val()
+            
+            if (ctype =="country")
+            {
+                htmx.ajax("POST",'{{request.path}}?id='+id,{target :"#form2-0-city",swap:"innerHTML",values:{data}})
+            }
+        }    
+</script> -->
+
+<script>
+    $('.carousel').carousel({
+        interval: 0
+    })
+
+
+  
+</script>
+{% block script%}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    changeSelect();
+    $('#add_more').click(function () {
+      
+           
+        $( ".myconsignee" ).each(function() {
+                data=$(this).val();
+                $(this).select2('destroy');
+                $(this).val(data);
+        });
+
+
+        var form_idx = $('#id_form2-TOTAL_FORMS').val();
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_form2-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        
+        assign_consignee();
+  
+    });
+    function   onSubmitBack()
+       {
+         window.location.href = '/booking/';
+       }
+    //validation new booking 
+    function    onSubmit()
+    {
+        var weight = $('#id_weight').val();
+        var height = $('#id_height').val();
+        var shipment_type = $('#id_shipment_type').val();
+        var pickup_date = $('#id_pickup_date').val();
+        var pickup_time = $('#id_pickup_time').val();
+        var pickup_point = $('#id_pickup_point').val();
+        var piece_count = $('#id_piece_count').val();
+        var width = $('#id_width').val();
+        var length = $('#id_length').val(); 
+        var vol_weight = $('#id_vol_weight').val(); 
+        var contact_person = $('#id_form2-0-contact_person').val(); 
+        var address1 = $('#id_form2-0-address1').val();
+        var address2 = $('#id_form2-0-address2').val();
+        var city = $('#id_form2-0-city').val();
+        var country = $('#id_form2-0-country').val();
+        var mobile_number1 = $('#id_form2-0-mobile_number1').val();
+        var contact_number = $('#id_contact_number').val();
+        isInsChecked =  $('#check1').is(":checked");
+        var insurance_value = $('#id_insurance').val();
+        var declare_value = $('#id_declare_value').val();
+        var cust_national_id = $('#id_cust_national_id').val();
+        //alert(insurance_value);
+        isValid=true;
+
+        if (weight == '' || height == '' || shipment_type == '' || pickup_date == '' || pickup_time == '' ||
+        piece_count == '' || width == '' || length == ''|| vol_weight=='' || contact_person=='' || address1==''
+        ||address2=='' || city=='' || country==''  || mobile_number1=='' || pickup_point=='' || contact_number == ''
+        ) 
+        {
+            fieldNames = '';
+
+            if (weight == '') {if(fieldNames=='') {fieldNames = 'Weight'} else {fieldNames = fieldNames + ', Weight'}} 
+            if (height == '') {if(fieldNames=='') {fieldNames = 'Height'} else {fieldNames = fieldNames + ', Height'}} 
+            if (shipment_type == '') {if(fieldNames=='') {fieldNames = 'Shipment Type'} else {fieldNames = fieldNames + ', Shipment Type'}} 
+            if (pickup_date == '') {if(pickup_date=='') {pickup_date = 'Pickup Date'} else {pickup_date = fieldNames + ', Pickup Date'}} 
+            if (pickup_time == '') {if(fieldNames=='') {fieldNames = 'Pickup Time'} else {fieldNames = fieldNames + ', Pickup Time'}} 
+            if (piece_count == '') {if(fieldNames=='') {fieldNames = 'Piece Count'} else {fieldNames = fieldNames + ', Piece Count'}} 
+            if (width == '') {if(fieldNames=='') {fieldNames = 'Width'} else {fieldNames = fieldNames + ', Width'}} 
+            if (length == '') {if(fieldNames=='') {fieldNames = 'Length'} else {fieldNames = fieldNames + ', Length'}} 
+            if (vol_weight == '') {if(fieldNames=='') {fieldNames = 'Vol Weight'} else {fieldNames = fieldNames + ', Vol Weight'}} 
+            if (contact_person == '') {if(fieldNames=='') {fieldNames = 'Contact Person'} else {fieldNames = fieldNames + ', Contact Person'}} 
+            if (address1 == '') {if(fieldNames=='') {fieldNames = 'Address1'} else {fieldNames = fieldNames + ', Address1'}} 
+            if (address2 == '') {if(fieldNames=='') {fieldNames = 'Address2'} else {fieldNames = fieldNames + ', Address2'}} 
+            if (city == '') {if(fieldNames=='') {fieldNames = 'City'} else {fieldNames = fieldNames + ', City'}} 
+            if (country == '') {if(fieldNames=='') {fieldNames = 'Country'} else {fieldNames = fieldNames + ', Country'}} 
+            if (mobile_number1 == '') {if(fieldNames=='') {fieldNames = 'Mobile Number1'} else {fieldNames = fieldNames + ', Mobile Number1'}} 
+            if (pickup_point == '') {if(fieldNames=='') {fieldNames = 'Pickup Point'} else {fieldNames = fieldNames + ', Pickup Point'}} 
+            if (contact_number == '') {if(fieldNames=='') {fieldNames = 'Contact Number'} else {fieldNames = fieldNames + ', Contact Number'}} 
+
+            isValid = false
+            alert('Please fill all required information (' + fieldNames+')');
+        }
+        
+        //Pickup Date Validation
+        if (isValid==true)
+        {
+            try
+            {
+
+                var today = new Date();
+                var curdate = today.toISOString().split('T')[0];
+                var curtime = today.getHours() + ":" + today.getMinutes() + ":" + '00';
+                //var curdateTime = date+' '+time;
+
+                myPickUpDt =  new Date(pickup_date).toISOString().split('T')[0];
+                if(myPickUpDt < curdate)
+                {
+                    isValid=false;
+                    alert('Pickup date should not be less than today date.')
+                }
+                if(isValid == true)
+                {
+                    var todayDTTime = new Date(curdate + ' ' +curtime);
+                    var pickupDTTime = new Date(myPickUpDt +' '+ pickup_time);
+
+                    // alert(todayDTTime)
+                    // alert(pickupDTTime)
+
+                    pickuptime = pickup_time + ":" + '00';
+                    if(pickupDTTime < todayDTTime)
+                    {
+                        isValid=false;
+                        alert('Pickup time should not be less than current time.')
+                    }
+                }            
+            }
+            catch(err)
+            {
+                alert(err);
+            }
+        }
+        
+        //Mobile Number Validation
+        if (isValid==true)
+        {
+            mb1 = mobile_number1.length
+            if (mb1 > 0)
+            {                        
+                if (mb1 > 10 || mb1 < 10)
+                {
+                    isValid = false;
+                    alert("Mobile Number is not valid (Enter a 10 digit Mobile Number)")
+                }
+                else
+                {
+                    //Check if first number is 0
+                    if (mobile_number1[0] == '0')
+                    {
+                        try
+                        {
+                            isValid = true
+                            //alert(mobile_number1)
+                            num = Number(mobile_number1)
+                            //alert(num)
+                            if(isNaN(num)){
+                                isValid=false
+                                alert('Mobile Number is not valid (A Mobile Number should not contain any characters)')
+                            }
+                            else
+                            {
+                                isValid = true
+                                //alert("Your Phone number is valid")
+                            }
+                            
+                        }
+                        catch(err)
+                        {
+                            isValid = false
+                            alert('Exception Mobile Number is not valid (A Mobile Number should not contain any characters)')
+                        }
+                    }
+                    else
+                    {
+                        isValid = false
+                        alert("Mobile Number is not valid (A Mobile Number should start with 0)")
+                    }
+                }
+            }
+            else
+            {
+                isValid = false
+                alert("Enter Mobile Number (A Mobile Number should be 10 digits)")
+            }
+        }
+
+        //Contact Number Validation
+        if (isValid==true)
+        {
+            mb1 = contact_number.length
+            if (mb1 > 0)
+            {                        
+                if (mb1 > 10 || mb1 < 10)
+                {
+                    isValid = false;
+                    alert("Contact Number is not valid (Enter a 10 digit Contact Number)")
+                }
+                else
+                {
+                    //Check if first number is 0
+                    if (contact_number[0] == '0')
+                    {
+                        try
+                        {
+                            isValid = true
+                            //alert(mobile_number1)
+                            num = Number(contact_number)
+                            //alert(num)
+                            if(isNaN(num)){
+                                isValid=false
+                                alert('Contact Number is not valid (A Contact Number should not contain any characters)')
+                            }
+                            else
+                            {
+                                isValid = true
+                                //alert("Your Phone number is valid")
+                            }
+                            
+                        }
+                        catch(err)
+                        {
+                            isValid = false
+                            alert('Exception Contact Number is not valid (A Contact Number should not contain any characters)')
+                        }
+                    }
+                    else
+                    {
+                        isValid = false
+                        alert("Contact Number is not valid (A Contact Number should start with 0)")
+                    }
+                }
+            }
+            else
+            {
+                isValid = false
+                alert("Enter Contact Number (A Contact Number should be 10 digits)")
+            }
+        }
+
+        if (isValid==true)
+        {
+            //alert(isInsChecked);
+            if(isInsChecked)
+            {
+                if (insurance_value=='' || declare_value == '' || cust_national_id == '')
+                {
+                    fieldNames = '';                    
+                    
+                    if (insurance_value == '') {if(fieldNames=='') {fieldNames = 'Insurance Value'} else {fieldNames = fieldNames + ', Insurance Value'}} 
+                    if (declare_value == '') {if(fieldNames=='') {fieldNames = 'Declare Value'} else {fieldNames = fieldNames + ', Declare Value'}} 
+                    if (cust_national_id == '') {if(fieldNames=='') {fieldNames = 'National ID'} else {fieldNames = fieldNames + ', National ID'}} 
+                    
+                    isValid = false
+                    alert('Please fill the required Insurance Information (' + fieldNames+')');
+                }
+
+                if(isValid == true)
+                {
+                    //alert(insurance_value);
+                    insval = insurance_value.length
+                    if (insval > 0)
+                    {   
+                        isValid = true
+                        //alert(mobile_number1)
+                        num = parseFloat(insurance_value)
+                        //alert(num)
+                        if(isNaN(num)){
+                            isValid=false
+                            alert('Insurance Value is not valid (Insurance Value should not contain any characters)')
+                        }
+                        else
+                        {
+                            isValid = true
+                            //alert("Your Phone number is valid")
+                        }                                                
+                    }
+                    else
+                    {
+                        isValid = false
+                        alert("Enter Insurance Value.")
+                    }
+                    
+                    if(isValid == true)
+                    {
+                        decval = declare_value.length
+                        if (decval > 0)
+                        {                        
+                            isValid = true
+                            //alert(mobile_number1)
+                            num = parseFloat(decval)
+                            //alert(num)
+                            if(isNaN(num)){
+                                isValid=false
+                                alert('Declared Value is not valid (Declared Value should not contain any characters)')
+                            }
+                            else
+                            {
+                                isValid = true
+                                //alert("Your Phone number is valid")
+                            }
+                        }
+                        else
+                        {
+                            isValid = false
+                            alert("Enter Declared Value.")
+                        }
+                    }
+
+                    if(isValid == true)
+                    {
+                        nid1 = cust_national_id.length
+                        if (nid1 > 0)
+                        {                        
+                            if (nid1 > 10 || nid1 < 10)
+                            {
+                                isValid = false;
+                                alert("National ID is not valid (Enter a 10 digit National ID")
+                            }
+                            else
+                            {
+                                isValid = true
+                                //alert(mobile_number1)
+                                num = Number(cust_national_id)
+                                //alert(num)
+                                if(isNaN(num)){
+                                    isValid=false
+                                    alert('National ID is not valid (A National ID should not contain any characters)')
+                                }
+                                else
+                                {
+                                    isValid = true
+                                    //alert("Your Phone number is valid")
+                                }                                                
+                            }
+                        }
+                        else
+                        {
+                            isValid = false
+                            alert("Enter National ID (A National ID should be 10 digits)")
+                        }
+                    }
+                }
+            }
+        }
+
+        if (isValid==true)
+        {
+            // confirm('Booking Successfull');
+            myText = 'Are you want to book a new Shipment!!';
+            if (confirm(myText) == true) {
+                $("#form1").submit();
+                return true;                
+            } else {
+                return false;
+            }
+
+        }
+           
+    }
+
+    assign_consignee();
+    function assign_consignee()
+    {
+       
+        $(".myconsignee").select2({
+        tags: true
+        });
+ 
+        
+        $(".myconsignee").change(function() {
+        
+        var id = $(this).val();  // get the selected projectID from the HTML input
+        var idName=$(this).attr('id').split('-');
+        var idFrom=idName[0]+"-"+idName[1]+"-";
+        var url = "/getconsignee/"+id+"/";
+        $.ajax({                       // initialize an AJAX request
+        url: url,                   
+        
+        success: function (data) {
+        
+        console.log(data);
+ 
+        $("#"+idFrom+"contact_person").val(data.id);
+        
+        $("#"+idFrom+"country").val(data.country);
+        $("#"+idFrom+"city").val(data.city);
+        $("#"+idFrom+"address1").val(data.address1);
+        $("#"+idFrom+"address2").val(data.address2);
+        $("#"+idFrom+"mobile_number1").val(data.mobile_number1);
+
+            // $("#sw").html(data);  
+        }
+        });
+    
+    
+
+    }); 
+    }
+
+    function changeSelect()
+    {
+
+        $(".myconsignee").select2({
+        tags: true
+        });
+    }
+
+
+    function myVolUpdate()
+    {
+        var height = $('#id_height').val();
+        var width = $('#id_width').val();
+        var length = $('#id_length').val(); 
+        
+       num = Number(height)
+        //alert(num)
+        if(isNaN(num)){            
+            alert('Enter valid height')
+            $('#id_height').val('1');
+            $('#id_height').focus();
+            isValid=false
+            height = 1
+        }
+        
+        num = Number(width)
+        //alert(num)
+        if(isNaN(num)){
+            $('#id_width').val('1');
+            $('#id_width').focus();
+            isValid=false
+            width = 1
+            alert('Enter valid Width')
+        }
+       
+        num = Number(length)
+        //alert(num)
+        if(isNaN(num)){
+            $('#id_length').val('1');
+            $('#id_length').focus();
+            isValid=false
+            length = 1
+            alert('Enter valid Length')
+        }
+       
+        var volWeight = ((height * width * length)/5000)
+        $('#id_vol_weight').val(volWeight); 
+    }
+
+    
+   
+</script>
+<script>
+$( document ).ready(function() 
+{
+    var today = new Date().toISOString().split('T')[0];
+    //alert(document.getElementsByName("pickup_date"));
+    document.getElementsByName("pickup_date")[0].setAttribute('min', today);
+
+    $(".heynow2_div").hide();
+    $("#check1").click(function() {
+        if($(this).is(":checked")) {
+            $(".heynow2_div").show(300);
+        } else {
+            $(".heynow2_div").hide(200);
+        }
+    });
+});
+
+</script>
+
+
+ 
+
+{% endblock %}

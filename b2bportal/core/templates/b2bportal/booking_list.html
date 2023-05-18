@@ -1,0 +1,348 @@
+{% extends base_template %}
+{% load static %}
+
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+ 
+<a class="right-side naqel-bg-color btn mt-0" href="{% url 'home:booking' 0 %}">
+  <span class="text-white" >New booking</span>
+</a>
+
+<div class="home-content">
+  <div class="row">
+    <div class="col-lg-3 col-md-1 card w-350 h-170 ">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <div><i class='bx bx-loader naqel-text-color'></i></div>
+        </div>
+        <div class="col-md-8">
+          <div>
+            <h5 class="text-secondary"><b>Under Process</b></h5>
+            <div class="number"><b>
+                <h1 class="naqel-text-color">&nbsp;&nbsp;&nbsp;&nbsp;254
+              </b></h1>
+            </div>
+            <p class="card-text"><small class="text-muted"></small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-1 card  w-350 h-170">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <div><i class='bx bxs-check-circle box-3 naqel-text-color'></i></div>
+        </div>
+        <div class="col-md-8">
+          <div>
+            <h5 class="text-secondary"><b>Submitted</b></h5>
+            <div class="number"><b>
+                <h1 class="naqel-text-color">&nbsp;&nbsp;&nbsp;{{data.count}}
+              </b></h1>
+            </div>
+            <p class="card-text"><small class="text-muted"></small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-1 card w-350 h-170">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <div><i class='bx bxs-calendar-event naqel-text-color'></i></div>
+        </div>
+        <div class="col-md-8">
+          <div>
+            <h5 class="text-secondary">&nbsp;&nbsp;<b>Draft</b></h5>
+            <div class="number"><b>
+                <h1 class="naqel-text-color">&nbsp;0
+              </b></h1>
+            </div>
+            <p class="card-text"><small class="text-muted"></small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-1 card w-350 h-170">
+      <div class="row g-0" >
+        <div class="col-md-4">
+          <div><i class='bx bxs-star bx-2x icon-8x naqel-text-color'></i></div>
+        </div>
+        <div class="col-md-8">
+          <div>
+            <h5 class="naqel-bg-blue"><a class="text-primary-blue" hx-get="/favouritebooking/" hx-target="#dialog"
+                href="/favouritebooking/"><b><u>Favourites</u></b></a></h5>
+            <div class="number"><b>
+                <h1 class="naqel-text-color">&nbsp;&nbsp;&nbsp;{{data.count}}
+              </b></h1>
+            </div>
+            <p class="card-text"><small class="text-muted"></small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <h>Product table</h1> -->
+
+  <div class="row p-2">   
+    <form hx-get="{% url 'home:booking-view' %}"  hx-target="#booking_list" 
+    hx-swap="innerHTML" 
+    hx-indicator=".progress" 
+    class="form-inline">
+    
+  <div class="col-lg-7">
+  
+    <div class="row p-2">
+      <div class="col-lg-4">
+          <div class="input-group">
+            <div class="input-group-prepend mr-2 text-naqel">
+              <label for="start"><b>From</b></label>
+            </div>
+            {{filter.form.start_date|as_crispy_field }} 
+            
+          </div>
+        </div>
+        
+        <div class="col-lg-4">
+          <div class="input-group">
+            <div class="input-group-prepend mr-2 text-naqel">
+              <label for="start"><b>To</b></label>
+            </div>
+            {{filter.form.end_date|as_crispy_field }} 
+            
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="input-group ">
+            <div class="input-group-prepend mr-2">
+              <!-- <i class="fa fa-sliders" aria-hidden="true"></i> -->
+            </div>
+            {{ filter.form.query|as_crispy_field}}
+            
+          </div>
+        </div>
+        <div class="col-lg-4 p-2">
+          <div class="input-group ">
+            <div class="input-group-prepend mr-2">
+              <!-- <i class="fa fa-sliders" aria-hidden="true"></i> -->
+            </div>
+            <!-- <button type="submit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-search"></span> Search
+            </button> -->
+          </div>
+        </div>
+   </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="input-group">
+          <button type="submit" class="btn btn-primary ml-5 text-white" style="margin-right: 250px; margin-bottom: 31px;" href="#"  data-toggle="tooltip" data-placement="top" title="Search">
+            <span class="glyphicon glyphicon-search"></span><i class="fa fa-search fa-2x"></i>
+          </button>
+      
+      </div>
+    </div>
+  </form>
+</div>
+
+<form action="/printbooking/" method="post"  name="myform">
+  {% csrf_token %}              
+<div class="btn btn-primary text-white">
+
+<a type="button" id="dropdownMenuButton" formtarget="_blank" class="text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-print fa-2x"></i>    
+</a>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  <button type="submit" name="print-sticker-label" formtarget="_blank"  class="dropdown-item naqel-text-color text-bold-front" href="#" onclick="return fnSticker();">Naqel Label</button>
+  <button type="submit" name="print-sticker-A5"  formtarget="_blank" class="dropdown-item naqel-text-color text-bold-front" href="#" onclick="return fnSticker();">Label Sticker</button>
+  <button type="submit" name="print-sticker-A4" formtarget="_blank" class="dropdown-item naqel-text-color text-bold-front" href="#" onclick="return fnSticker();">A4 Waybill</button>
+</div>
+</div>
+
+<a class="btn btn-primary text-white" data-toggle="tooltip" data-placement="top" title="Upload and Generate Waybill" href="#" onclick="onSubmitupload();">
+<i class="fa fa-upload fa-2x"></i>
+</a>
+<a  class="btn btn-primary text-white" data-toggle="tooltip" data-placement="top" title="Refresh"  href="{{ request.get_full_path }}">
+<i class='fa fa-refresh fa-2x'></i></a>
+
+{# The actual table #}
+
+</form>
+
+
+
+<div style="margin-top: 10px;">
+  <div id="booking_list" hx-get="{% url 'home:booking-list'%}" 
+  hx-trigger="load delay:1s" hx-target="#booking_list" hx-swap="innerHTML">
+
+  </div>
+   
+  </div>
+ 
+<script>
+   
+  function   onSubmitupload() 
+    {
+      window.location.href = '/UploadBooking';
+    }
+
+    function   daterange()
+    {
+      window.location.href = '/bookingSearch/';
+    }
+  
+</script>
+<style>
+  .table {
+      width: 100%;
+      margin-bottom: 1rem;
+      color: #06205C!important;
+  }
+  
+  .pagination .page-item.active>.page-link, .pagination .page-item.active>.page-link:focus, .pagination .page-item.active>.page-link:hover {
+      background-color: #06205C!important;
+      border-color: #51cbce;
+      color: #FFFFFF;
+  }
+  
+    input[type=text], input[type=email], input[type=password], input[type=number], select, select2, textarea {
+      width: 300px !important;
+  }
+    .text-primary-blue{
+     color: blue;
+  
+    }
+     
+    .card {
+      border-radius: 4px !important;
+      margin-bottom: 10px !important;
+      position: relative;
+      border: 12px solid rgba(0, 0, 0, .125);
+  
+    }
+  
+    /* .bg-text-green{
+        color: green;
+      } */
+  
+  
+    .table>thead>tr>th {
+      font-size: 15px;
+      font-weight: 700;
+      padding-bottom: 0;
+      text-transform:none;
+      border: 0;
+      border : 5px solid white!important;
+    }
+   
+    .row {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-right: -15px;
+      margin-left: -15px;
+      
+    }
+  
+    .row-middle {
+      background-color: red;
+    }
+  
+    .table {
+      width: 100%;
+      background-color: white;
+      margin-top: .5rem;
+      
+    }
+  
+    h5 {
+      margin-top: 0px;
+      margin-bottom: 25px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+  
+    .text-naqel {
+      color: #06205C;
+    }
+    .text-naqel-greenyellow {
+      color: #445c06;
+    }
+    .text-naqel-violet {
+      color: #e337b2;
+    }
+    .bg-naqel-gray1 {
+      background-color: #486af300;
+    }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+      padding: 0px 12px;
+      vertical-align: middle;
+  }
+  h1, .h1 {
+      font-size: 2.5em!important;
+      line-height: 1.15!important;
+      margin-bottom: 30px!important;
+  }
+  
+  .btn:hover {
+    background-color:firebrick!important;
+  
+  }
+  /* button, input, optgroup, select, textarea {
+      margin: 15px;
+  } */
+  </style>
+ 
+{% endblock %}
+
+
+{% block script%}
+<script>
+
+  function fnSticker()
+  {
+    var chebox = document.getElementsByName('selectaction');
+    var options = document.getElementsByTagName('input');
+
+    isChecked = false;
+    for (var i = 0; i < options.length; i++) 
+    {
+      if (options[i].checked) 
+      {
+            isChecked = true;
+      }
+    }
+    
+    if(isChecked == false)
+    {
+      alert('Please select at least one waybill.')
+    }
+
+    return isChecked;
+  }
+
+  $('.reload').on("click",function(){
+      alert("hi");
+       location.reload();      
+  });
+  
+  function confirmme(id)
+  {
+      if (confirm('Aye You sure to delete selected item?'+id))
+      {
+         htmx.ajax('GET', "/deletebooking/"+id, {target:'#dialog'})
+         
+      }
+      else
+      {
+         event.stopPropagation(); event.preventDefault();
+      }
+      
+  }
+</script>
+
+{% endblock %}

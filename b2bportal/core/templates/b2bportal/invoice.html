@@ -1,0 +1,100 @@
+{% extends 'b2bportal/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class=" bg-white card">
+    <h5 class="card-header naqel-bg-color text-white pb-2">Invoice Report</h5>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-1 pt-2">
+                    <label for="nameVariable" class="form-label naqel-text-color text-bold-front">From Date:</label>
+                </div>
+                <div class="col-lg-4 pt-1">
+                    {{form.from_date}}
+                </div>
+                <div class="col-lg-1 pt-1">
+                    <label for="nameVariable" class="form-label naqel-text-color text-bold-front">To Date:</label>
+                </div>
+                <div class="col-lg-4 pt-1">
+                    {{form.to_date}}
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary bg-naqel-red  btn-sm " onclick="on_submit()">
+                            Clear</button>
+                        <button type="submit" class="btn btn-primary naqel-bg-color  btn-sm " name="btnsubmit">
+                            <i class="fa fa-pdf"></i>Submit</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+<div class="border-bottom border-danger"></div>
+<div class="border-bottom border-danger"></div>
+
+<div class="table-responsive" style="overflow-x: hidden;">
+    <table class="table table-bordered w-100">
+        <thead>
+            <tr class="naqel-bg-color text-white">
+                <th scope="col">SLNo.</th>
+                <th scope="col">Waybills</th>
+                <th scope="col">Invoice</th>
+                <th scope="col">Invoice No</th>
+                <th scope="col">City</th>
+                <th scope="col">Invoice Date</th>
+                <th scope="col">Account</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col">No.of Waybills</th>
+                <th scope="col">Invoice Amount</th>
+                <th scope="col">Request Status</th>
+                <!-- <th style="min-width: 100px!important">Date</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr class="naqel-text-color">
+                <td>{{ forloop.counter }}</td>
+                <td><a href="https://solutionsuat.naqelksa.com/B2BAPI/Report/ReportPage/B2B.asmx/ReportGenerate?Type=1&InvoiceNo={{r.InvoiceNo}}" target="_blank"
+                        class="naqel-blue"> Download </a></td>
+                <td><a href="https://solutionsuat.naqelksa.com/B2BAPI/Report/ReportPage/B2B.asmx/ReportGenerate?Type=1&InvoiceNo={{r.InvoiceNo}}&ClientID={{r.Account}}"
+                        target="_blank" class="naqel-blue"> Download </a></td>
+                <td>{{r.InvoiceNo}}</td>
+                <td>{{r.City}}</td>
+                <td>{{r.InvoiceDate|slice:"10"}}</td>
+                <td>{{r.Account}}</td>
+                <td>{{r.Name}}</td>
+                <td>{{r.WaybillCount}}</td>
+                <td>{{r.InvoiceAmount}}</td>
+                <td>{{r.RequestStatus}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table>thead>tr>th {
+        font-size: 11px !important;
+    }
+
+    .naqel-blue {
+        color: blue;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    $(document).ready(function () { 
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementsByName("from_date")[0].setAttribute('max', today);
+        document.getElementsByName("to_date")[0].setAttribute('max', today);
+    });
+    //reset button
+    function on_submit(){
+    window.location.href = '/invoice/';
+    }    
+</script>
+
+{% endblock %}

@@ -1,0 +1,320 @@
+{% extends 'b2bportal/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class=" bg-white card">
+    <h5 class="card-header naqel-bg-color text-white pb-2">Client Report</h5>
+    <div class="card-body">
+        <div class="row">
+        </div>
+        <div class="row ">
+            <div class="col-lg-4 col-md-1 ">
+                <form method="post" action="" id="cleardata">
+                {% csrf_token %} 
+                <div class="form-group ">
+                       <select class="form-control form-control-sm" name="reportType" required>
+                        <option class="naqel-text-color" value="" disabled selected hidden>Report Type</option>
+                        <option>Daily Recap</option>
+                        <option>Delivery</option>
+                        <option>Waybill Last Status</option>
+                        <option>Customer KPI</option>
+                        <option>Multiple Shipment Tracking</option>
+                        <option>Complete Tracking</option>
+                        <option>Delivery Performance</option>
+                        <option>Proof Of Delivery (POD) Report</option>
+                        <option>Shipments Status</option>                     
+                        <option>Delivery Recap</option> 
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-1 ">
+                <div class="form-group">
+                    
+                    <select class="form-control form-control-sm">
+                        <option class="naqel-text-color" value="" disabled selected hidden>Region</option>
+                        <option class="naqel-text-color" value="0">Riyadh</option>
+                        <option class="naqel-text-color" value="0">Dammam</option>
+                        <option class="naqel-text-color" value="0">Abha</option>
+                        <option class="naqel-text-color" value="0">Jeddah</option>
+                        <option class="naqel-text-color" value="0">KSA</option>
+                    </select>
+
+                    <!-- <select class="form-control form-control-sm" required>
+                        <option class="naqel-text-color" value="" disabled selected hidden>Destination</option>
+                        <option class="naqel-text-color" value="0">India</option>
+                        <option class="naqel-text-color" value="1">Pakistan</option>
+                        <option class="naqel-text-color" value="1">UK</option>
+                        <option class="naqel-text-color" value="1">USA</option>
+                        <option class="naqel-text-color" value="1">Qatar</option>
+                    </select> -->
+                </div>
+            </div>
+           
+            <div class="col-lg-4 col-md-1 ">
+                <div class="input-group">
+                    <div class="col-lg-4 text-naqel naqel-text-color mb-2">
+                        <!-- <i class="fa fa-square"></i> -->
+                        <label for="start">From Date</label>
+                    </div>
+                    {{form.from_date}} 
+                </div>
+            </div>
+
+             <div class="col-lg-4 col-md-1 ">
+                <div class="form-group ">
+                    <select class="form-control form-control-sm">
+                        <option class="naqel-text-color" value="" disabled selected hidden>Origin</option>
+                        <option class="naqel-text-color" value="0">Riyadh</option>
+                        <option class="naqel-text-color" value="0">Dammam</option>
+                        <option class="naqel-text-color" value="0">Abha</option>
+                        <option class="naqel-text-color" value="0">Jeddah</option>
+                        <option class="naqel-text-color" value="0">KSA</option>
+                    </select>
+                    <!-- <select class="form-control form-control-sm" required>
+                        <option class="naqel-text-color" value="" disabled selected hidden>Region</option>
+                        <option class="naqel-text-color" value="0">Riyadh</option>
+                        <option class="naqel-text-color" value="0">Dammam</option>
+                        <option class="naqel-text-color" value="0">Abha</option>
+                        <option class="naqel-text-color" value="0">Jeddah</option>
+                        <option class="naqel-text-color" value="0">KSA</option>
+                    </select> -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-1 ">
+                <div class="form-group">
+                    <select class="form-control form-control-sm">
+                        <option class="naqel-text-color" value="" disabled selected hidden>Destination</option>
+                        <option class="naqel-text-color" value="0">Riyadh</option>
+                        <option class="naqel-text-color" value="0">Dammam</option>
+                        <option class="naqel-text-color" value="0">Abha</option>
+                        <option class="naqel-text-color" value="0">Jeddah</option>
+                        <option class="naqel-text-color" value="0">KSA</option>
+                    </select>
+                    <!-- <select class="form-control form-control-sm" required>
+                        <option class="naqel-text-color" value="" disabled selected hidden>Origin</option>
+                        <option class="naqel-text-color" value="0">Riyadh</option>
+                        <option class="naqel-text-color" value="0">Dammam</option>
+                        <option class="naqel-text-color" value="0">Abha</option>
+                        <option class="naqel-text-color" value="0">Jeddah</option>
+                        <option class="naqel-text-color" value="0">KSA</option>
+                    </select> -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-1 ">
+
+                <div class="input-group">
+                    <div class=" col-lg-4 text-naqel naqel-text-color">
+                        <!-- <i class="fa fa-square"></i> -->
+                        <label for="start">To Date</label>
+                    </div>
+                    {{form.to_date}}
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-1 ">
+                <div class="form-group ">
+                    <select class="form-control form-control-sm">
+                        <option class="naqel-text-color" value="" disabled selected hidden>Type of Proof of Delivery (POD)</option>
+                        <option class="naqel-text-color" value="0">Signature</option>
+                        <option class="naqel-text-color" value="1">Photo</option>
+                        <option class="naqel-text-color" value="1">Iqama</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-1 ">
+                <div class="form-group">
+                    <select class="form-control form-control-sm">
+                        <option class="naqel-text-color" value="" disabled selected hidden>Service Type</option>
+                        <option class="naqel-text-color" value="0">B2B</option>
+                        <option class="naqel-text-color" value="1">COD</option>
+                        <option class="naqel-text-color" value="1">B2C</option>
+                    </select>
+                </div>
+            </div>
+            <!-- <div class="col-lg-4 col-md-1 ">
+                <div class="form-group">
+                   
+                    <button type="button" class="btn btn-red naqel-bg-color text-white" onclick="on_submit()">
+                        Clear</button>
+                        <button type="submit" formtarget="_blank" class="btn btn-primary naqel-bg-color text-white" name="btnpdf">
+                        <i class="fa fa-pdf"></i> Show PDF</button>
+                        <button type="submit" formtarget="_blank" class="btn btn-primary naqel-bg-color text-white" name="btnexcel">
+                        <i class="fa fa-excel-o"></i> Show Excel</button>
+                       <button type="submit" formtarget="_blank" class="btn btn-primary naqel-bg-color text-white" name="btncsv">
+                        <i class="fa fa-excel-o"></i> Show Csv</button>   
+                </div>
+            </div> -->
+
+
+            <div class="btn btn-primary text-white">
+                <a type="button" id="dropdownMenuButton" formtarget="_blank" class="text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Show Report    
+                </a>
+                
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button type="submit" formtarget="_blank" class="btn btn-primary naqel-bg-color text-white dropdown-item" name="btnpdf">
+                        <i class="fa fa-pdf"></i> PDF</button>
+                        <button type="submit" formtarget="_blank" class="btn btn-primary naqel-bg-color text-white dropdown-item" name="btnexcel">
+                        Excel</button>
+                        <button type="submit"  formtarget="_blank" class="btn btn-primary naqel-bg-color text-white dropdown-item" name="btncsv">
+                        CSV</button>
+                
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+</form>  
+
+ 
+
+
+<!-- <h5 class="naqel-bg-color text-white p-2">Client Report</h5>
+<div class="row">
+    <div class="col-lg-4 col-md-1 p-2 border">
+        <div class="form-group ">
+            <select class="naqel-text-color" required>
+                <option class="naqel-text-color" value="" disabled selected hidden>Report Type</option>
+                <option class="naqel-text-color" value="0">Excel</option>
+                <option class="naqel-text-color" value="1">PDF</option>
+                <option class="naqel-text-color" value="1">CSV</option>
+                <option class="naqel-text-color" value="1">Text</option>
+            </select>
+            <select required>
+                <option class="naqel-text-color" value="" disabled selected hidden>Region</option>
+                <option class="naqel-text-color" value="0">Riyadh</option>
+                <option class="naqel-text-color" value="0">Dammam</option>
+                <option class="naqel-text-color" value="0">Abha</option>
+                <option class="naqel-text-color" value="0">Saudi Arab</option>
+                <option class="naqel-text-color" value="0">Dubai</option>
+            </select>
+            <select required>
+                <option class="naqel-text-color" value="" disabled selected hidden>P.O.D</option>
+                <option class="naqel-text-color" value="0">Signature</option>
+                <option class="naqel-text-color" value="1">Photo</option>
+                <option class="naqel-text-color" value="1">Iqama</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-1 p-2 border">
+        <div class="form-group">
+            <select required>
+                <option class="naqel-text-color" value="" disabled selected hidden>Destination</option>
+                <option class="naqel-text-color" value="0">India</option>
+                <option class="naqel-text-color" value="1">Pakistan</option>
+                <option class="naqel-text-color" value="1">UK</option>
+                <option class="naqel-text-color" value="1">USA</option>
+                <option class="naqel-text-color" value="1">Qatar</option>
+            </select>
+            <select required>
+                <option class="naqel-text-color" value="" disabled selected hidden>Origin</option>
+                <option class="naqel-text-color" value="0">Riyadh</option>
+                <option class="naqel-text-color" value="0">Dammam</option>
+                <option class="naqel-text-color" value="0">Abha</option>
+                <option class="naqel-text-color" value="0">Saudi Arab</option>
+                <option class="naqel-text-color" value="0">Dubai</option>
+            </select>
+            <select required>
+                <option class="naqel-text-color" value="" disabled selected hidden>Service Type</option>
+                <option class="naqel-text-color" value="0">B2B</option>
+                <option class="naqel-text-color" value="1">COD</option>
+                <option class="naqel-text-color" value="1">B2C</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-1 p-2 border">
+        <div class="input-group">
+            <div class="input-group-prepend mr-2 text-naqel naqel-text-color mb-2">
+                
+                <label for="start">From Date</label>
+            </div>
+            <input type="date" id="start" name="trip-start" class="form-control sm-text" value="2022-05-16"
+                min="2022-01-01" max="2022-12-31">
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend mr-2 text-naqel naqel-text-color mb-2">
+              
+                <label for="start">To Date</label>
+            </div>
+            <input type="date" id="start" name="trip-start" class="form-control sm-text" value="2022-05-16"
+                min="2022-01-01" max="2022-12-31">
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn bg-naqel-red float-right ">
+                Clear</button>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn naqel-bg-color float-right ">
+                Search</button>
+        </div>
+    </div> -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+
+    $(document).ready(function () {
+        //alert(123);
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementsByName("from_date")[0].setAttribute('max', today);
+        document.getElementsByName("to_date")[0].setAttribute('min', today);
+
+    });
+
+
+    document.querySelector("#btnSearch").addEventListener("click", () => {
+        // document.getElementById("divData").style.display = ""
+    });
+    document.querySelector("#btnClear").addEventListener("click", () => {
+        // document.getElementById("divData").style.display = "none"
+    });
+
+    function on_submit_data(){
+        document.getElementById("cleardata").reset();
+        }
+
+</script>
+<style>
+    .btn, .navbar .navbar-nav>a.btn {
+        border-width: 2px;
+        font-weight: 600;
+        font-size: 0.8571em;
+        line-height: 1.35em;
+        text-transform: uppercase;
+        border: none;
+        margin: 10px 1px;
+        border-radius: 3px;
+        padding: 4px 18px;
+        cursor: pointer;
+        background-color: #66615B;
+        color: #FFFFFF;
+        -webkit-transition: all 150ms linear;
+        -moz-transition: all 150ms linear;
+        -o-transition: all 150ms linear;
+        -ms-transition: all 150ms linear;
+        transition: all 150ms linear;
+    }
+    
+		   
+    
+	
+																			  
+																	
+		   
+																			 
+    </style>
+		   
+	
+								  
+														 
+			 
+    <script>
+    function on_submit(){
+    window.location.href = '/clientreport/';
+    }   
+    </script>
+			 
+
+	
+
+{% endblock %}

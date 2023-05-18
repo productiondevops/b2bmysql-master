@@ -1,0 +1,151 @@
+{% extends base_template %}
+{% load static %}
+{% block content %}
+
+
+<style>
+.form-outline select {
+  -webkit-appearance:auto;
+
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #06205c;
+    border-color: #06205c;
+    padding: 0.5px 20px;
+    margin: 100px;
+    float: right;
+
+}
+.card-body{
+  background-color:#EBECF1
+}
+
+.required:after {
+    content:" *";
+    color: red;
+  }
+.p {
+  font-size: 5px;
+  line-height: 44px;
+  font-weight: 700;
+}
+.btn-primary:hover {
+  background-color:firebrick!important;
+
+}
+.card .card-header {
+
+background-color: #06205c !important;
+border-radius:5px 5px 0px 0px!important;
+color: white;
+height: 40px;
+}
+.btn-primary {
+  background-color: #06205c !important;
+  padding: 4.5px 20px!important;
+  float: right;
+}
+</style>
+
+{% if form.errors %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-danger">
+      {{ form.non_field_errors }}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="row modal-body" id="enquirymessage">
+ 
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <p> Enquiry Section</p>
+            </div>            
+            <div class="card-body">
+                <form hx-post="{{request.path}}">
+                  {% csrf_token %}
+                    <div class="form-outline">
+                      <label for="form3Example1q"class="required" class="form-label">Full Name
+                      </label>
+                      {{form.Name}}
+
+                      <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name"> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1"class="required">Email Address</label>
+                      {{form.Email}}
+                      <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email Address "> -->
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1"class="required">Phone Number</label>
+                      {{form.PhoneNo}}
+                      <!-- <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Phone Number"> -->
+                    </div>
+                    <div class="form-outline select ">
+                      <label for="exampleInputEmail1" class="required" >Enquiry Type</label>
+                      {{form.EnquiryType}}
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1"class="required">Please Provide any Details</label>
+                      {{form.Details}}
+                      <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
+                    </div>
+                    <button type="submit" id ="EnqSubmit" name ="EnqSubmit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+          </div>
+    </div>
+    </div>
+<br/>
+<div class="row">
+    <div class="col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <p>CS Contact</p>
+    </div>
+    <div class="card-body">
+      {%for i in csdata%}
+      <div class="row">
+        <div class="col text-bold-front"><th>Email </th></div>
+        <div class="col"><a href="mailto:{{i.CsEmail}}">{{i.CsEmail}}</a></div><!--show CS agent Email-->
+      </div>
+      <div class="row">
+        <div class="col text-bold-front"><th>ContactNo</th></div>
+        <div class="col">{{i.CSContactNo}}</div><!--show CS agent Number-->
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <p>Key Account Contact</p>
+        </div>
+        <div class="card-body">
+          {%for i in keydata%}
+
+          <div class="row">
+            <div class="col text-bold-front">Email</div>
+            <div class="col"><a href="mailto:{{i.KeyEmail}}">{{i.KeyEmail}}</a></div> <!--show Pre agent Email-->
+          </div>
+          <div class="row">
+            <div class="col text-bold-front"><th>ContactNo </th></div>
+            <div class="col">{{i.KeyContactNo}}</div>
+          </div>
+          {%endfor%}
+
+        </div>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

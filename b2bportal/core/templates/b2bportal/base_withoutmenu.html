@@ -1,0 +1,441 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'b2b/assets/img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'b2b/assets/img/naqel_favicon.png' %}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    NAQEL Customer Portal
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="{% static 'b2b/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'b2b/assets/css/paper-dashboard.css' %}" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="{% static 'b2b/assets/demo/demo.css' %}" rel="stylesheet" />
+  <style>
+    circle a {
+    font-family:'Roboto Condensed', sans-serif;
+    font-weight: 100;    
+    display: block;    
+    width: 20%;
+    height: 20%;     
+    color:#000000;
+    text-align:center;
+    line-height:400%;
+    margin-left: -11%;
+    margin-top: -9%;
+    position: absolute;
+    text-align: center;
+    border:1px solid #ffffff;
+    border-radius: 50%;   
+    -webkit-transition: border-color 1s ease;
+    -moz-transition: border-color 1s ease;
+    -o-transition: border-color 1s ease;
+    -ms-transition: border-color 1s ease;
+    transition: border-color 1s ease;         
+
+}
+/* .main-panel {
+   
+    float: unset!important;
+    width: 100%!important; 
+  
+} */
+.circle a:hover {
+
+  color:#000000;
+
+   border-color: #000000;
+
+}
+
+ /* #nav a:active, #nav a.active {
+
+    border-color:#000000 !important;
+} */
+
+#nav a:active, #nav a.active {
+     
+       background-color: rgb(255, 119, 0)!important;
+   }
+
+    .text-danger-red{
+     color: red;
+    }
+    .footer {
+    padding: 2px 0!important;
+}
+    .sidebar .sidebar-wrapper,
+    .off-canvas-sidebar .sidebar-wrapper {
+      position: relative;
+      height: calc(100vh) !important;
+      overflow: auto;
+      width: 260px;
+      z-index: 4;
+      padding-bottom: 100px;
+    }
+    .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 105vw!important;
+    height: 105vh!important;
+    background-color: #000;
+}
+  </style>
+  <style>
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    input[type=number],
+    select,
+    select2,
+    textarea {
+      font-family: "Ubuntu Light", "Ubuntu", "Ubuntu Mono", "Segoe UI";
+      /* max-width: 40em !important; */
+      display: block;
+      width: 100%;
+      height: calc(2.25rem + 2px);
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #495057;
+      /* background-color: #fbfaee !important; */
+      background-clip: padding-box;
+      -moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: inset 0 0 2px rgb(0 0 0 / 20%);
+      box-shadow: inner 0 0 4px rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+      height: calc(1.8125rem + 2px);
+      font-size: .875rem;
+      line-height: 1.0;
+      border-radius: 0.8rem !important;
+      border: 0.5px solid #869099a8 !important;
+    }
+
+    .modal-header .close {
+      padding: 1rem 1rem;
+      color: white !important;
+      margin: -3rem 0rem 0rem 0rem !important;
+    }
+
+    .modal-content {
+      width: 80vw !important;
+    }
+
+    .naqel-bg-color {
+      background-color: #06205C !important;
+    }
+
+    .naqel-text-color {
+      color: #06205C !important;
+    }
+    .text-bold-front {
+    font-weight: bold;
+    }
+
+    .naqel-text-color-field {
+      color: #06205C !important;
+    }
+
+    .modal-body {
+      padding: 5px 5px;
+      color: #000;
+      background-color: #EBECF1;
+
+    }
+
+    .modal-footer {
+      padding: 0px 4px 0px 0 !important;
+      background-color: #EBECF1;
+    }
+
+    .modal-header {
+      color: white !important;
+      background-color: #06205C !important;
+      padding: 13px 1px 0px 13px;
+    }
+
+    @media (min-width: 576px) {
+      .modal-dialog {
+        max-width: 80vw !important;
+        margin: 0rem auto !important;
+      }
+    }
+
+
+
+    .list-group-item {
+      position: relative;
+      display: block;
+      padding: 0.35rem 1.25rem !important;
+      background-color: #EBECF1 !important;
+      border: 1px solid white !important;
+    }
+
+    .form-group .form-control,
+    .input-group .form-control {
+      padding: 3px 6px 5px 6px;
+    }
+
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    input[type=number],
+    select,
+    select2,
+    textarea {
+      border-radius: 0.5rem !important;
+      padding: 5px!important;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.1rem;
+    }
+
+    .input-group,
+    .form-group {
+      margin-bottom: 5px !important;
+      position: relative;
+    }
+
+    .bg-naqel-gray {
+      color: #E0E0E0;
+    }
+    .text-naqel-green {
+      color: green;
+    }
+    .text-naqel-blue {
+      color: blue;
+    }
+    .text-naqel-red {
+      color: red;
+    }
+    .text-naqel-violet {
+      color: violet;
+    }
+    .text-naqel-yellow {
+      color: yellow;
+    }
+    .bg-naqel-red {
+      background-color: red;
+    }
+.btn-primary {
+  background-color: #06205c !important;
+  padding: 4.5px 20px!important;
+  float: right;
+   }
+.btn-primary:hover {
+  background-color:firebrick!important;
+
+}
+.btn-successpage-pdf {
+  background-color: #06205c !important;
+  
+  
+   }
+.btn-successpage-pdf:hover {
+  background-color:blue!important;
+
+}
+.btn-successpage-pdfmiddle {
+  background-color: #06205C !important;
+  padding: 4.5px 20px!important;
+  text-transform:none;
+  float: middle;
+   }
+.btn-successpage-pdfmiddle:hover {
+  background-color:firebrick!important;
+
+}
+.naqel-bg {
+        background-color: #06205C;
+    }
+    .naqel-text {
+        color: #06205C;
+    }   
+     
+  </style>
+  <script src="{% static 'b2b/htmx.min.js' %}" defer></script>
+</head>
+
+<body class="" style="zoom:90%;">
+  <div class="wrapper">
+   
+    <div class="main-panel naqel-bg w-100">
+      <!-- End Navbar -->
+      <div class="content">
+        {% block content%}
+
+        {% endblock %}
+      </div>
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid ">
+          <div class="row">
+            <nav class="footer-nav">
+
+            </nav>
+            <!-- <div class="credits ml-auto">
+              <span class="copyright">
+                ©
+                <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by NAQEL IT Team
+              </span>
+            </div> -->
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div id="modal" class="modal fade">
+    <div id="dialog" class="modal-dialog" hx-target="this"></div>
+  </div>
+   <!-- The Modal -->
+   <div class="modal Modaltest" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Company Profile</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p> -->
+          <div class="table-responsive-lg">
+          <table class="table table-striped">
+                <tr class="trborder">
+                    <th scope="col">Your Company Name</th>
+                    <td>B2B Client</td>
+                    <th scope="col">Country</th>
+                    <td>Kindom of Saudia Arabia</td>
+                </tr>
+                <tr class="trborder">
+                    <th>Company Registeration Number</th>
+                    <td>11222887547957</td>
+                    <th scope="col">City</th>
+                    <td>Riyadh</td>
+                </tr>
+<tr class="trborder">
+                    <th>Phone Number</th>
+                    <td>01158754869</td>
+                    <th scope="col">State</th>
+                    <td>Riyadh</td>
+                </tr>
+                <tr class="trborder">
+                    <th>Email Address </th>
+                    <td>Naqel@com.sa</td>
+                    <th scope="col">Post Code</th>
+                    <td>4036</td>
+                </tr>
+            </table>
+          </div>
+    </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+
+  <!--   Core JS Files   -->
+  <script src="{% static 'b2b/assets/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'b2b/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'b2b/assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'b2b/assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+  <script src="{% static 'b2b/assets/js/plugins/moment.min.js' %}"></script>
+  <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+  <script src="{% static 'b2b/assets/js/plugins/bootstrap-switch.js' %}"></script>
+  <!--  Plugin for Sweet Alert -->
+  <script src="{% static 'b2b/assets/js/plugins/sweetalert2.min.js' %}"></script>
+  <!-- Forms Validations Plugin -->
+  <script src="{% static 'b2b/assets/js/plugins/jquery.validate.min.js' %}"></script>
+  <!--  Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+  <script src="{% static 'b2b/assets/js/plugins/jquery.bootstrap-wizard.js' %}"></script>
+  <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+  <script src="{% static 'b2b/assets/js/plugins/bootstrap-selectpicker.js' %}"></script>
+  <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+  <script src="{% static 'b2b/assets/js/plugins/bootstrap-datetimepicker.js' %}"></script>
+  <!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
+  <script src="{% static 'b2b/assets/js/plugins/jquery.dataTables.min.js' %}"></script>
+  <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+  <script src="{% static 'b2b/assets/js/plugins/bootstrap-tagsinput.js' %}"></script>
+  <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+  <script src="{% static 'b2b/assets/js/plugins/jasny-bootstrap.min.js' %}"></script>
+  <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+  <script src="{% static 'b2b/assets/js/plugins/fullcalendar/fullcalendar.min.js' %}"></script>
+  <script src="{% static 'b2b/assets/js/plugins/fullcalendar/daygrid.min.js' %}"></script>
+  <script src="{% static 'b2b/assets/js/plugins/fullcalendar/timegrid.min.js'  %}"></script>
+  <script src="{% static 'b2b/assets/js/plugins/fullcalendar/interaction.min.js'  %}"></script>
+  <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+  <script src="{% static 'b2b/assets/js/plugins/jquery-jvectormap.js'  %}"></script>
+  <!--  Plugin for the Bootstrap Table -->
+  <script src="{% static 'b2b/assets/js/plugins/nouislider.min.js'  %}"></script>
+  <!--  Google Maps Plugin    -->
+
+  <!-- Chart JS -->
+  <script src="{% static 'b2b/assets/js/plugins/chartjs.min.js' %}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="{% static 'b2b/assets/js/plugins/bootstrap-notify.js' %}"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'b2b/assets/js/paper-dashboard.min.js' %}" type="text/javascript"></script>
+  <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+  <script src="{% static 'b2b/assets/demo/demo.js' %}"></script>
+
+
+
+  <script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      // Javascript method's body can be found in b2b/assets/js/demos.js
+      //demo.initDashboardPageCharts();
+      //demo.initVectorMap();
+      htmx.on("htmx:afterSwap", (e) => {
+        // Response targeting #dialog => show the modal
+        if (e.detail.target.id == "dialog") {
+          $("#modal").modal("show");
+         
+        }
+
+      })
+
+      htmx.on("htmx:beforeSwap", (e) => {
+        console.log("htmx:beforeSwap", e)
+        // Empty response targeting #dialog => hide the modal
+        if (e.detail.target.id == "dialog" && !e.detail.xhr.response) {
+          $("#modal").modal("hide")
+          e.detail.shouldSwap = false
+        }
+      })
+
+      // Remove dialog content after hiding
+      $("#modal").on("hidden.bs.modal", () => {
+        $("#dialog").empty()
+      })
+
+      
+
+    });
+  </script>
+   {% block script%}
+
+   {% endblock %}
+

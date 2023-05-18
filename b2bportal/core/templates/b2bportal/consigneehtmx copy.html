@@ -1,0 +1,62 @@
+
+<div>
+    <h5 class="modal-title naqel-bg-color text-white pl-1" id="exampleModalLabel">Consignee</h5>
+</div>
+<div class="row naqel-text-color">
+    <div class="col-lg-5 col-md-1 pl-4">
+        <div class="form-group ">
+            <select  x-ref="select" multiple name="select_series" hx-include="[name='select_series']"
+                hx-get="{% url 'grid_index' %}" hx-vals="javascript:{...get_parameters()}" hx-target="#grid"
+                hx-indicator="#htmx-indicator">
+                {% for this_series in series %}
+                <option value="{{ this_series.value }}">
+                    {{ this_series.get_label }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="text" class="form-control" id="inputaddress" placeholder="Address1">
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="text" class="form-control" id="inputaddress" placeholder="Address2">
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-2 col-md-1 pl-4">
+        <!-- <button class="naqel-bg-color" type="button"><i class="fa fa-plus  text-white"></i></button> -->
+
+    </div>
+    <div class="col-lg-5 col-md-1 pl-4">
+        <div class="form-group">
+            <div>
+                <input type="text" class="form-control" id="inputaddress" placeholder="City">
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="text" class="form-control" id="inputaddress" placeholder="Country">
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="text" class="form-control" id="inputaddress" placeholder="Mobile">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+
+<input type="button" title="reset" type="checkbox"/>
+    
+</div>
+
+
+
+

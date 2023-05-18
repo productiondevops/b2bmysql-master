@@ -1,0 +1,37 @@
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-lg-9">                 
+                        <form class="form-inline">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                <center>Shipper Address</center>
+                            </h5>
+                            <div id="search_div" class="input-group">
+                                <input class="form-control ml-4" style="width: 500px" name="search_data" type="search" placeholder="Search" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button type="button" name="btn_search" hx-post="/shipper-lookup/" hx-target="#shiper_address" hx-include="#search_div" class="btn text-white my-2 my-sm-0" type="submit"><i class="fa fa-search mr-2"></i>Search</button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <!-- <div class="col-lg-2">
+                    <button type="button" hx-get="/add-new-shipper/" hx-target="#dialog" hx-swap="innerHTML" class="btn btn-primary-blank" data-toggle="modal" data-target="modal">Add new</button>
+                </div>
+                <div class="col-lg-1">
+                    <a href="#" class="" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-close text-white fa-1x"></i>
+                    </a>
+                </div> -->
+            </div>
+        </div>
+        <div class="modal-body">
+            <table id="shiper_address" class="table table-hover table-striped">
+                {{address_data}}
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" hx-get="/add-new-shipper/" hx-target="#dialog" hx-swap="innerHTML" class="btn btn-primary" data-toggle="modal" data-target="modal">Add new</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+

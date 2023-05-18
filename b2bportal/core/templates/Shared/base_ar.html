@@ -1,0 +1,161 @@
+{% load static %}
+
+<!doctype html>
+<html lang="ar" dir="rtl"> 
+<!--dir="rtl" lang="ar"-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>ناقل اكسبرس</title>
+
+	
+	<!-- Google Tag Manager -->
+
+	<script>
+	
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		
+		})(window,document,'script','dataLayer','GTM-P4VF5MT');
+		
+		</script>
+		
+		<!-- End Google Tag Manager -->
+		
+		<!-- Google Tag Manager -->
+		
+		<script>
+		
+		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+		
+		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+		
+		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+		
+		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		
+		})(window,document,'script','dataLayer','GTM-NGZ2BXZ');
+		
+		</script>
+		
+		<!-- End Google Tag Manager -->
+	
+	<!-- favicon icon -->
+	<!-- <link rel="shortcut icon" href="{% static 'images/favicon.png' %}"/> -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Almarai&display=swap" rel="stylesheet">
+	
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+
+	<!-- animate -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}"/>
+
+	<!-- flaticon -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/flaticon.css' %}"/>
+
+	<!-- fontawesome -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}"/>
+
+	<!-- themify -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/themify-icons.css' %}"/>
+
+	<!-- slick -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/slick.css' %}">
+
+	<!-- Site -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/site.css' %}">
+
+	<!-- prettyphoto -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/prettyPhoto.css' %}">
+
+	<!-- shortcodes -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/shortcode.css' %}"/>
+
+	<!-- main -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main_ar.css' %}"/>
+
+	<!-- megamenu -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/megamenu_ar.css' %}"/>
+
+
+	<!-- responsive -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}"/>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P4VF5MT"
+
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Google Tag Manager (noscript) -->
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NGZ2BXZ"
+
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="page">
+<!--	&lt;!&ndash;	 preloader start &ndash;&gt;-->
+<!--	<div id="preloader" class="blobs-wrapper">-->
+<!--		<div class="cmt-bgcolor-skincolor loader"></div>-->
+<!--	</div>-->
+	<!--preloader End -->
+	{% include 'Shared/navbar_ar.html' %}
+
+	{% block content%}{% endblock %}
+
+	{% include 'Shared/footer_ar.html' %}
+
+</div>
+
+{% url 'cookies' as cookies %}
+         
+{% if request.path != cookies %}
+
+<div class="wrapper" style= "display: block">
+    <img src="{% static 'images\Cookie1.png' %}" alt="">
+    <div class="content">
+      <header>الموافقة على ملفات الكوكيز</header>
+      <p>بالنقر على "قبول جميع ملفات تعريف الارتباط" ، فإنك توافق على أن ناقل بإمكانها تخزين ملفات الكوكيز على جهازك والكشف عن المعلومات وفقًا لسياسة
+		  <a class="item" href="{% url urllink|add:':cookies'  %}">ملفات الكوكيز الخاصة بنا</a></p>
+      <div class="buttons">
+        <button class="">قبول جميع ملفات الكوكيز</button>
+        <a href="{% url urllink|add:':cookies'%}" class="item">اعرف اكثر</a>
+      </div>
+    </div>
+  </div>
+
+<!--   <div id="myDIV" class="blockpage">
+
+</div> -->
+{%endif%}
+
+<!-- Javascript -->
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/jquery-waypoints.js' %}"></script>
+<script src="{% static 'js/jquery-validate.js' %}"></script>
+<script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+<script src="{% static 'js/numinate.min.js' %}"></script>
+<script src="{% static 'js/main_ar.js' %}"></script>
+<script src="{% static 'js/site.js' %}"></script>
+</body>
+</html>

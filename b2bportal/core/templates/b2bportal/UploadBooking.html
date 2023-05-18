@@ -1,0 +1,105 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+{% block content %}
+<h3 class=""><b>File Upload</b></h3>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="row"> 
+ <p class="btn-primary mb-1" style="float: left;">
+    <input type="file" id="file" name="file">
+    <input type="submit" class="btn naqel-bg-green  text-white" name="UploadFile">
+    <!-- <a class="btn-primary" style="float: right;" href="#" onclick="onSubmituploadback();">
+      Back
+    </a> -->
+    <button type="button"  class="btn naqel-bg-green  text-white" onclick="onSubmituploadback()">Back</button>
+ </p>&nbsp;&nbsp;&nbsp;
+ <button type="submit" class="btn-primary mb-1 text-naqel-red" id="file_submit" name="generate_waybill"><b>Generate Waybill</b></button>
+</div>
+<a href="/static/Allfiles/samplefile.xlsx" class="btn-primary text-primary" target="_blank"><li class="list-inline-item text-bold-front redhover" >Download SampleFile</li></a>
+
+  <div class="row ">
+    <h6> Validated <span class="badge badge-success ml-4">{{valid}}</span> &nbsp; Not-Validated <span class="badge badge-danger ml-4">{{notvalid}}</span></h6>
+  </div>
+<!-- <div><button class="btn-primary">Back</button></div> -->
+{{waybill_count}}
+{% if waybill_count > 0 %}
+
+<div class="bg-success alert">
+  <h6> {{waybill_count}} Waybills Generated Successfully. </h6>
+</div>
+{% endif %}
+<div class="table-responsive">
+    <table class="table table-bordered w-100">
+        <thead>
+          <tr class="naqel-bg-color text-white">
+            <th scope="col">SLNo.</th>
+            <th scope="col">Validation</th>
+            <th scope="col">RefNo</th>
+            <th scope="col">Origin</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">PhoneNo</th>
+            <th scope="col">MobileNo</th>
+            <th scope="col">Address</th>
+            <th scope="col">Location</th>
+            <th scope="col">POBox</th>
+            <th style="min-width: 100px!important">Date</th>
+            <th scope="col">Peices</th>
+            <th scope="col">Weight</th>
+            <th scope="col">Width</th>
+            <th scope="col">Length</th>
+            <th scope="col">Height</th>
+            <th scope="col">Amount</th>
+            <th scope="col">DeliveryInstruction</th>
+            <th scope="col">PODType</th>
+            <th scope="col">DeclaredValue</th>
+            <th scope="col">GoodDesc</th>
+            <th scope="col">ConsigneeNationalID</th>
+            <th scope="col">Actions</th>
+ 
+          </tr>
+        </thead>
+        <tbody>
+           
+         {% for  r in records %}
+          <tr class="font-weight-bold">
+            <td>{{ forloop.counter }}</td>
+            <td><span class="text-danger text-bold">{{r.message}}</span></td>
+            <td>{{r.refno}}</td>
+            <td>{{r.origin}}</td>
+            <td>{{r.Destination}}</td>
+            <td>{{r.Name}}</td>
+            <td>{{r.Email}}</td>
+            <td>{{r.PhoneNo}}</td>
+            <td>{{r.MobileNo}}</td>
+            <td>{{r.Address}}</td>
+            <td>{{r.Location}}</td>
+            <td>{{r.POBox}}</td>
+            <td >{{r.Date|date:'d-m-y'}}</td>
+            <td>{{r.Peices}}</td>
+            <td>{{r.Weight}}</td>
+            <td>{{r.Width}}</td>
+            <td>{{r.Length}}</td>
+            <td>{{r.Height}}</td>
+            <td>{{r.Amount}}</td>
+            <td>{{r.DeliveryInstruction}}</td>
+            <td>{{r.PODType}}</td>
+            <td>{{r.DeclaredValue}}</td>
+            <td>{{r.GoodDesc}}</td>
+            <td>{{r.ConsigneeNationalID}}</td>
+            <td><a class="btn-primary text-naqel-red" href="{% url 'home:deleteUploadBooking' r.id%}"><i class="fa fa-trash fa-2x"></i></a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+</div>
+</form>
+<script>
+function onSubmituploadback()
+    {
+      window.location.href = '/booking';
+    }
+
+</script>
+{% endblock %}

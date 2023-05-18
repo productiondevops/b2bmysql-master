@@ -1,0 +1,79 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="modal-content" style="width: 75.0em">
+    <div class="modal-header" style="background-color:#06205C; height: 80px; margin-top: -3px;">
+        <h5 class="modal-title" style="color: white;" id="exampleModalLabel">Booking Summary</h5>
+        <button type="button" class="close" style="color: white; margin-top: -60px;" data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm" style="height: 300px;">
+                
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Booking Ref
+                        <span>123455</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Origin
+                        <span>America</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Destination
+                        <span>Ataturk Avenue</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Account no
+                        <span>1234589762358</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Company name
+                        <span>Apple Computer, Inc.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Piece count
+                        <span>2</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Weight
+                        <span>2kg</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Date
+                        <span>Tuesday, January 18, 2022</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Time
+                        <span>12:35 PM</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Waybill No
+                        <span>12345678</span>
+                    </li>
+                </ul>
+                
+                <div>
+                    <li type="button" class="btn btn-successpage-pdf p-2" >
+                       Back
+                    </li>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

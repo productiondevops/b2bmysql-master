@@ -1,0 +1,234 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h5 class="text-danger border-bottom border-danger">Booking #<b>({{booking.bookingref}})</b>  Shipment Confirmation</h5>
+<div class="mt-3">
+    <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Consignee</h5>
+<div class="row col-md-12">    
+    <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Company Name :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.company_profile}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label class="required" for="nameVariable">Address :</label>
+     </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.address}}
+     </div> 
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Contact/Department :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.contact_person}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Country :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.country}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Mobile :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.mobile_number}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">City :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.city}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label">Email :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.email}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label">State :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.consignee.pickup_point}}
+     </div>
+     
+</div> 
+</div>
+<div class="mt-3">
+    <h5 class="naqel-text-color border-bottom border-danger text-bold-front">Shipment Information</h5>
+
+    <div class="row col-md-12">    
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Prepared Date :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+            {{booking.booking_date}}
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label class="required" for="nameVariable">Total Pieces :</label>
+         </div>
+         <div class="col-lg-4 pt-1">
+            {{booking.piece_count}}
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Product Group :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+          SGM
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Gross Weight :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+            {{booking.gross_weight}} 
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Service Type :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+            {{booking.shipment_type}} 
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Chargable Weight :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+            {{booking.chargable_weight}} 
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Goods Description :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+        Shipped successfully 
+         </div>
+         <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Custom Value :</label>
+        </div>
+         <div class="col-lg-4 pt-1">
+            {{booking.customs_value}} 
+         </div>
+         
+    </div> 
+
+
+
+</div>    
+<div class="mt-3">
+    <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Pickup Request</h5>
+</div>
+<div class="row col-md-12">    
+    <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Date :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.booking_date}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label class="required" for="nameVariable">Latest Time :</label>
+     </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.Latest_time}}
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label class="required" for="nameVariable">Ready Time :</label>
+     </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.ready_time}}
+     </div>
+</div>
+<div class="mt-3">
+    <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Payment</h5>
+</div>
+<div class="row col-md-12">    
+    <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Rate :</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        {{booking.customs_value}} 
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label class="required" for="nameVariable">Payment Method :</label>
+     </div>
+     <div class="col-lg-4 pt-1">
+        CASH
+     </div>
+</div>
+<div class="mt-3">
+    <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Notifications</h5>
+</div>
+<p class="naqel-text-color">Check the following boxes to send emails to the shipper or the reciver to be notified about the shipments pickup and delivery</p>
+<div class="row col-md-12">    
+    <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Shipper Email:</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        <input type="text" value="splksa@gmail.com"  class="form-control form-control-sm" name="nameVariable" style="min-width: 280px" aria-describedby="emailHelp" required>
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required"> Notify On:</label>
+    </div>
+    <div class="col-lg-2 pt-1">
+        <input type="checkbox">
+        <label for="check1">Shipping</label><br>
+    </div>
+    <div class="col-lg-2 pt-1">
+        <input type="checkbox">
+        <label for="check1">Delivery</label><br>
+    </div>
+    
+</div> 
+<div class="row col-md-12">    
+    <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required">Reciver Email:</label>
+    </div>
+     <div class="col-lg-4 pt-1">
+        <input type="text" value="{{booking.consignee.email}}" class="form-control form-control-sm" name="nameVariable" style="min-width: 280px" aria-describedby="emailHelp" required>
+     </div>
+     <div class="col-lg-2 pt-1">
+        <label for="nameVariable" class="form-label required"> Notify On:</label>
+    </div>
+    <div class="col-lg-2 pt-1">
+        <input type="checkbox">
+        <label for="check1">Shipping</label>
+    </div>
+    <div class="col-lg-2 pt-1">
+        <input type="checkbox">
+        <label for="check1">Delivery</label>
+    </div>
+    
+</div> 
+<div class="col-lg-12 mt-5">
+    <input id="AcceptMe" name="AcceptMe" type="checkbox">
+    <label for="check1" class="naqel-text-color">I confirm that the shipping information provided by me above is true and a accurate and compiles with the <b class="text-danger">Naqel Express Terms and conditions and i agree to settle all shipping charges relating to such shipment.</label>
+</div>
+<div class="modal-footer">
+                      
+    <a type="button" href="{% url 'home:booking' booking.id %}" class="btn btn-primary">Edit Shipment</a>
+    <button id="confirm_shipping" name="confirm_shipping" type="button" class="btn btn-primary">Confirm shipping </button>
+  </div>
+
+  <script>
+    $('#confirm_shipping').click(function(){
+    var isChecked = $('#AcceptMe').is(':checked')?true:false; // $('#AcceptMe').attr('checked')?true:false;
+    if(!isChecked){
+        Swal.fire({title: 'Confirm', text:'Please select checkbox to Confim ?'})
+       
+    }
+    else{
+        location.href="/confirm-booking/{{booking.id}}/";
+       
+    }
+});
+  </script>
+<style>
+    .swal2-styled.swal2-confirm {
+    background-color: #06205C;
+}
+</style>
+
+{% endblock %}

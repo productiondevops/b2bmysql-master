@@ -1,0 +1,329 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    .sortable tr {
+        cursor: pointer;
+    }
+</style>
+<div class="row pt-1">
+    <div class=" col-lg-12 col-md-12 ">
+        <div>
+            <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Shipper</h5>
+        </div>
+    </div>
+</div>
+<form method="post" name="actkey">
+    {% csrf_token %}
+    <div class="row col-md-12">
+        <div class="col-lg-10 pt-1">
+            <label class="form-label">Address:</label>
+
+            <p class="text" id="selected_shipper">
+                <input type="hidden" name="shipper" id="id_shipper" />
+                {{shipper.company_name}},{{shipper.contact_person}},{{shipper.address}},{{shipper.mobile_number}},{{shipper.city}}
+            </p>
+        </div>
+        <div class="col-lg-2 pt-1">
+            <button type="button" hx-get="/shipper-lookup/" hx-target="#dialog" hx-swap="innerHTML" class="btn btn-primary-blank" data-toggle="modal" data-target="modal">Change
+                Address</button>
+        </div>
+    </div>
+    
+
+    <div class="row pt-1">
+        <div class="col-lg-12 col-md-12">
+            <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Receiver</h5>
+            <a type="button" hx-get="/reciver-address-lookup/" hx-target="#dialog" hx-swap="innerHTML" class="float-right text-danger text-bold-front" data-toggle="modal" data-target="modal">Look up in address Book</a>
+        </div>
+    </div>
+   <div id="selected_reciver">
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Company Name:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.company_name}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label class="required" for="nameVariable">Address:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.address}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Contact/Department:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.contact_department}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Country:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.country}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Mobile:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.mobile}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">City:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.city}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Email:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.fax}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">State:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.state}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Zip/Postal Code:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.postal_code}}
+        </div>
+        <div class="col-lg-1 pt-1">
+            {{form.save_to_addressbook}}
+        </div>
+        <div class="col-lg-3 pt-1">
+            <label for="check1">Save to address book</label><br>
+        </div>
+
+    </div>
+</div>
+    <div class="row pt-1">
+        <div class=" col-lg-12 col-md-12 ">
+            <div>
+                <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Shipment Information</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Shipment Type:</label>
+        </div>
+        <div class="col-lg-4 pt-1" id="shipment_type">
+            {{form.shipment_type}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Pieces:</label>
+        </div>
+        <div class="col-lg-3 pt-1">
+            {{form.piece_count}}
+        </div>
+        <div class="col-lg-1 pt-1">
+            <button id="button_dimension" type="button" hx-get="/dimensions/" hx-target="#dialog" hx-swap="innerHTML" class="float-right text-danger text-bold-front" data-toggle="modal" data-target="modal"><b>...</b></button>
+        <!-- <input type="button" value="..." class="form-control form-control-sm" data-toggle="modal"
+                data-target="#exampleModalCenter" name="nameVariable" style="min-width: 40px"
+                aria-describedby="emailHelp" required> -->
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Gross Weight:</label>
+        </div>
+        <div class="col-lg-1 pt-1">
+            {{form.gross_weight}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Chargeable Weight:</label>
+        </div>
+        <div class="col-lg-1 pt-1">
+            {{form.chargable_weight}}
+        </div>
+
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Additional Services:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.additonal_services}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Goods Origin:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.goods_origin}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">COD Value:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.customs_value}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Reference:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.reference}}
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Goods Description:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            {{form.goods_description}}
+        </div>
+
+        
+        <!-- <div class="col-lg-2 pt-1">
+                <label for="nameVariable" class="form-label">Remarks:</label>
+            </div>
+             <div class="col-lg-4 pt-1">
+                <textarea id="text1"  style="min-height: 70px"></textarea>
+             </div> -->
+
+
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-1 pt-1">
+            {{form.request_for_schedule_pickup}}
+        </div>
+        <div class="col-lg-4 pt-1">
+            <label for="check1">Schedule a pickup for this shipment</label>
+        </div>
+
+    </div>
+
+
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Date:</label>
+        </div>
+        <div class="col-lg-2 pt-1">
+            {{form.pickup_date}}
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Pickup Time:</label>
+        </div>
+        <div class="col-lg-2 pt-1">
+            {{form.ready_time}}
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label"></label>
+            <!-- <label for="nameVariable" class="form-label required">Latest Time:</label> -->
+        </div>
+        <div class="col-lg-2 pt-1">
+            {{form.Latest_time}}
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Payment Method</label>
+        </div>
+    </div>
+
+    <div class="col-lg-3 pt-1">
+        {{form.payment_method}}
+    </div>
+    <br/>
+    <div class="row col-md-12" >
+        <div class="col-lg-2 pt-1" >
+            <input type="checkbox" id="check1" name="check1" value="00">
+            <label for="check1" >Insurance</label><br>
+        </div>
+        <div  class="row col-lg-4 pt-1" id="Insurance_label">
+            {{form.insurance_value}}<hr>
+            {{form.declare_value}}
+        </div>
+    </div>
+
+    <!-- <div class="col-lg-12 col-md-1 text-naqel-blue">
+        <div class="check_div">
+        <input type="checkbox" id="check1" name="check1" value="00">
+        <label for="check1"><b>Insurance</b></label><br>
+        </div>
+        <div class="heynow1_div">
+        </div>
+        <div class="heynow2_div">
+        <label for="heynow2" ><b>{{form.insurance}}</b></label>
+        <label for="heynow2" ><b>{{form.declare_value}}</b></label>
+        <label for="heynow2" ><b>{{form.cust_national_id}}</b></label>
+        </div>
+    </div> -->
+    
+    <div class="col-lg-3 pt-1">
+        <p>Note: Field Marked with <b class="text-danger">*</b> &nbsp; are required</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+        <button type="submit" class="btn naqel-bg-color">Proceed</button>
+        <a type="submit" class="btn bg-danger" href="/newbooking/">Clear</a>
+
+    </div>
+    <!-- <div class="float-right mt-5">
+        <input type="hidden" name="booking_id" value="{{booking}}" />
+
+        <input type="hidden" name="pintoservice" value="0" />
+        <input type="checkbox" name="pintoservice" value="1" hx-post="/add-to-favourite/" hx-trigger="change"><b
+            class="text-naqel-blue"> Pin to Favourite</input>
+    </div> -->
+    </div>
+    </div>
+    <!-- All modalas -->
+    <!-- shipper address -->
+    <!-- shipper change Address start -->
+   
+    <div class="modal fade sortable" id="modal" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
+    <div id="dialog" class="modal-dialog" role="document">
+    </div>
+    </div>       
+
+    <!-- shipper change Address end -->
+    <!-- Reciver Lookup Address start -->
+    <div class="modal fade sortable" id="modal" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
+    <div id="dialog" class="modal-dialog" role="document">
+    </div>
+    </div> 
+    <!-- Reciver Lookup Address End -->
+
+  
+    <!-- modal end for Dimensions -->
+    <!-- All modalas -->
+
+
+</form>
+
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script>
+    
+    $("#Insurance_label").hide();
+    checkBox = document.getElementById('check1').addEventListener('click', event => {
+        
+        if(event.target.checked) {
+            $("#Insurance_label").show();
+        }
+        else{
+            $("#Insurance_label").hide();
+        }
+    });
+
+</script>
+
+
+
+{% endblock %}

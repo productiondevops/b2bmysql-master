@@ -1,0 +1,283 @@
+{% load static %}
+{% load i18n %}
+<!--header start-->
+	<!--suppress ALL -->
+
+<header id="masthead" class="header cmt-header-style-01">
+			  <!-- cmt-topbar-wrapper -->
+	            <div class="cmt-topbar cmt-bgcolor-grey cmt-topbar-wrapper clearfix">
+	                <div class="container">
+	                    <div class="cmt-topbar-content">
+	                        <div class="topbar-left text-left top-contact">
+	                            <ul class="top-contact cmt-textcolor-grey cmt-highlight-left">
+	                               <a href="#" target="_blank"><li class="list-inline-item text-white redhover">Download NAQEL App</li></a>
+	                            </ul>
+	                            <div class="topbar-btn d-inline-block">
+	                                <a href="" class="cmt-btn btn-inline cmt-btn-size-sm cmt-icon-btn-right">Find Us On the Map <i class="ti ti-arrow-right"></i></a>
+	                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<div class="topbar-btn d-inline-block">
+	                                <a class="cmt-btn btn-inline cmt-btn-size-sm cmt-icon-btn-right "> Talk to customer support(+966)920020505,8002464444</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="topbar-right text-right">
+	                        <ul class="top-contact">
+								{% for topheader in headerdata%}
+	                            <li><strong class="cmt-textcolor-grey font-weight-500"><i class="fa fa-phone cmt-textcolor-darkgrey"></i>Talk to Customer Support</strong> <span class="tel-no ">{{topheader.ENnaqelNumber}}</span></li>
+								<li>
+								{%endfor%}
+									<i class="fa fa-user"></i>
+									<a href="https://infotrack.naqelexpress.com/InfoTrack/View/Login.aspx" target="_blank" class="cmt-textcolor-grey font-weight-500">NAQEL Employees</a>
+								</li>
+							<!-- 	<li>
+									<i class="fa fa-user-plus"></i>
+									<a href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerLogin.aspx" target="_blank" class="cmt-textcolor-grey font-weight-500">Business User</a>
+								</li> -->
+
+	                            <li>
+	                                <div class="cmt-social-links-wrapper list-inline">
+	                                    <ul class="social-icons">
+											
+											<li>
+												<a class="tooltip-bottom" target="_blank" href="https://twitter.com/naqelexpr?lang=en" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
+											</li>
+										
+											<li>
+												<a class=" tooltip-bottom" target="_blank" href="https://www.instagram.com/naqelexpr/" data-tooltip="Instagram"><i class="fa fa-instagram"></i></a>
+											</li>
+											<li>
+												<a class="tooltip-bottom" target="_blank" href="https://www.facebook.com/NaqelExpr" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
+											</li>
+											<li>
+												<a class="tooltip-bottom" target="_blank" href="https://bit.ly/2Wzzoeg"  data-tooltip="WhatsApp"><i class="fa fa-whatsapp "></i></a>
+											</li>
+	                                    </ul>
+	                                </div>
+	                            </li>
+	                        </ul>
+	                    </div>
+	                </div>
+	            </div><!-- cmt-topbar end -->
+<!--	 site-header-menu-->
+
+		<div id="site-header-menu" class="site-header-menu">
+			            <div class="site-header-menu-inner cmt-stickable-header">
+<!--			<div class="site-header-menu-inner cmt-stickable-header">-->
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<!--site-navigation -->
+							<div class="site-navigation d-flex flex-row align-items-center">
+								<!-- site-branding -->
+								<div class="site-branding mr-auto">
+
+									<a class="home-link"  title="NAQEL Express" rel="home">
+
+										<img id="logo-img" class="img-center standardlogo"
+											 src="{% static 'images/logo with logistic en.jpg' %}" alt="logo-img">
+
+										<img id="logo-dark" class="img-center stickylogo"
+											 src="{% static 'images/logo with logistic en.jpg' %}" alt="logo-img">
+									</a>
+
+								</div><!-- site-branding end -->
+								<div class="btn-show-menu-mobile menubar menubar--squeeze">
+                                        <span class="menubar-box">
+                                            <span class="menubar-inner"></span>
+                                        </span>
+								</div>
+								<!-- menu -->
+								<nav class="main-menu menu-mobile mr-5" id="menu">
+									<ul class="menu">
+										<li
+										{% if '/' == request.path %}
+										 class="mega-menu-item active"
+										{% else %}
+										  class="mega-menu-item"
+										{% endif %}>
+										<a class="mega-menu-link">
+											<span class="navmenuconstcolor">Ship</span></a>
+
+										<ul class="mega-submenu navmenuconstcolor ">
+											<li class="active"><a href="https://www.naqelexpress.com/en/sa/ratecalculator/">Rate Estimate</a></li>
+											<li><a href="https://www.naqelexpress.com/en/sa/Pickup/">Schedule A Pickup</a></li>
+											<li><a href="https://www.naqelexpress.com/en/sa/TransitTime/">Transit Time</a></li>
+											<li><a href="https://www.naqelexpress.com/en/sa/services/FuelSurcharge">Fuel Surcharge</a></li>
+										
+										</ul>
+										</li>
+
+
+										<!-- <li class="mega-menu-item"><a  class="mega-menu-link">
+											<span class="navmenuconstcolor">Track</span></a>
+											<ul class="mega-submenu">
+												<form id="cmt-contactform-nav"  autocomplete="off" class="pt-10" method="post" action="#">
+												 {% csrf_token %}
+												<div class="pl-10 pr-10 pb-10">
+													<b class="boldfont">Track Your Shipment</b>
+												</div>
+												<li class="pl-10 pr-10">
+													<input  type="text" id="tracktext" name="waybills" placeholder="Shipment Number" required="">
+												</li>
+												<li>
+													<div class="pl-10 pr-10 pb-10">
+													<button class="submit  cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-radius w-100"
+																		type="submit">{% trans "Track" %}
+													</button></div>
+												</li>
+												</form>
+											</ul>
+										</li> -->
+
+
+										<li class="mega-menu-item"><a href="https://www.naqelexpress.com/en/sa/services/Services" class="mega-menu-link">
+											<span class="navmenuconstcolor">Services</span>
+											</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												<li><a href="https://www.naqelexpress.com/en/sa/services/Ecommerce">E-commerce </a></li>
+												<li><a href="https://www.naqelexpress.com/en/sa/services/Express">Express </a></li>
+												<li><a href="https://www.naqelexpress.com/en/sa/services/Warehouse">Warehousing </a></li>
+												<li><a href="https://www.naqelexpress.com/en/sa/services/Freight">Freight Forwarding </a></li>
+												<li><a href="https://www.naqelexpress.com/en/sa/services/Logistics">Industrial Solutions </a></li>
+												<li><a href="https://www.naqelexpress.com/en/sa/services/Pharma">Pharma Care</a></li>
+											    <li><a href="https://www.naqelexpress.com/en/sa/services/Gateway">Customs Clearance</a></li>
+											</ul>
+										</li>
+
+									
+
+
+										<li {% if '/aboutus' == request.path %}
+										 class="mega-menu-item active"
+										{% else  %}
+										  class="mega-menu-item "
+										{% endif %}
+											><a class="mega-menu-link">
+										<span class="navmenuconstcolor">About Us</span>
+										</a>
+											<ul class="mega-submenu  navmenuconstcolor">
+												<li class="active"><a href="https://www.naqelexpress.com/en/sa/About/AboutUs">Our Story</a></li>
+											<!-- 	<li class=""><a href="#">Technology</a></li> -->
+												<li><a href="https://www.naqelexpress.com/en/sa/About/Quality">Quality Policy</a></li>
+												<li><a href="https://www.naqelexpress.com/en/sa/About/CustomerCharter">Customer Charter</a></li>
+												
+												<!-- <li><a href="faq.html">Faq</a></li>
+												<li class="mega-menu-item"><a href="shop.html" class="mega-menu-link">Shop</a>
+													<ul class="mega-submenu">
+														<li><a href="product-details.html">Single Product Details</a>
+														</li>
+														<li><a href="cart.html">Cart</a></li>
+														<li><a href="checkout.html">Checkout</a></li>
+													</ul>
+												</li> -->
+											</ul>
+										</li>
+									
+										<li class="mega-menu-item">
+											<a class="mega-menu-link">
+												<span class="navmenuconstcolor">Contact Us</span>
+												</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												<li class=""><a href="https://www.naqelexpress.com/en/sa/contactus">Contact Us</a></li> 
+												<li class="mega-menu-item"><a href="#" class="mega-menu-link">Help & Support</a>
+													<ul class="mega-submenu">
+														<!-- <li class=""><a href="#">Claim Process</a></li> -->
+														<li class=""><a target="_blank" href="https://www.naqelexpress.com/en/sa/pdfs/ClaimRules">Claims Rules and Procedures</a></li>
+														<li><a target="_blank" href="https://www.naqelexpress.com/en/sa/pdfs/Terms">Terms & Conditions</a></li>
+														<li class=""><a href="https://www.naqelexpress.com/en/sa/FAQ/">FAQ</a></li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+
+									
+										{% if urllink == 'sa'%}
+										<li class="mega-menu-item">
+										 	<a target="_blank" href="https://register.naqelexpress.com/" class=" navmenuconstcolor">Drive Part Time</a>
+										</li>
+										{%endif%}
+
+										{% if request.user_agent.is_mobile %}
+										{% if user.is_authenticated %}
+
+										<li {% if '/' == request.path %}
+										 class="mega-menu-item active"
+										{% else %}
+										  class="mega-menu-item"
+										{% endif %}>
+											<a href="{% url urllink|add:':myprofile' %}" class="navmenuconstcolor">My Account</a>
+										</li>
+										{% else %}
+										<li class="mega-menu-item"><a  class="mega-menu-link">
+											<span class="navmenuconstcolor">Login</span>
+											</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												<li><a href="#">Individual Users Login</a></li>
+										  		<li><a target="_blank" href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerLogin.aspx">Business Users Login</a></li>
+												
+											</ul>
+										</li>
+										{% endif %}
+										{% endif %}
+
+										 
+									</ul>
+								</nav>
+								<div class="header_extra  d-flex flex-row align-items-center justify-content-end">
+
+									 <div class="header_search mobilelogin mr-10">
+										<a href="#"><i class="fa fa-user cmt-textcolor-skincolor "></i></a>
+									</div>
+								<!-- 	<div class="header_cart">
+										<a href="cart.html" class="button-cart">
+											<div class="cart_icon"><i class="ti-shopping-cart"></i></div>
+											<div class="cart_count">0</div>
+										</a>
+									</div>  -->
+									{% if user.is_authenticated %}
+									<div class="header_btn">
+										<a class="cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor text-white"
+										   href="#">My Account</a>
+									</div>
+									{% else %}
+                                    <!-- not required for B2B project commented on 01/06/2022 -->
+									 <div class="dropdown1">
+										<div class="header_btn">
+										<!-- <a class="cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-radius text-white"
+										   >Login</a> -->
+										</div>
+										<div class="dropdown1-content">
+										  <li><a href="#">Individual Users Login</a></li>
+										  <li><a target="_blank" href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerLogin.aspx">Business Users Login</a></li>
+										  
+										</div>
+									  </div>
+								 
+									{% endif %}
+
+								</div> 
+
+								<!--Booktstrap start-->
+								<!-- Example single danger button -->
+
+								<!--bootstrap end-->
+							</div><!-- site-navigation end-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- site-header-menu end-->
+	</header>
+<!-- header end--> 
+
+
+<!-- Floating SPL  -->
+<div class="float-sm">
+
+	<!-- <div class="fl-fl float-fb">
+		<a class="" href="https://splonline.com.sa/en/national-address-1/" target="_blank">Update National Address</a>
+		<img src="{% static 'images\SPL_Logo.svg' %}" alt="" height="40px" width="36px">
+		
+	  </div> -->
+</div>
+<!-- Floating SPL -->

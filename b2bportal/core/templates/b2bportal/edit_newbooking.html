@@ -1,0 +1,349 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    .sortable tr {
+        cursor: pointer;
+    }
+</style>
+<div class="row pt-1">
+    <div class=" col-lg-12 col-md-12 ">
+        <div>
+            <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Shipper</h5>
+        </div>
+    </div>
+</div>
+<form method="post" name="actkey" action="">
+    {% csrf_token %}
+    <div class="row col-md-12">
+        <div class="col-lg-10 pt-1">
+            <label class="form-label">Address:</label>
+
+            <p class="text" id="selected_shipper">
+                <input type="hidden" name="shipper" id="id_shipper" />
+                {{default_shipper.company_name}},{{default_shipper.contact_person}},{{default_shipper.address}},{{default_shipper.mobile_number}},{{default_shipper.city}}
+            </p>
+        </div>
+        <div class="col-lg-2 pt-1">
+            <button type="button" hx-get="/shipper-lookup/" hx-target="#dialog" hx-swap="innerHTML" class="btn btn-primary-blank" data-toggle="modal" data-target="modal">Change
+                Address</button>
+        </div>
+    </div>
+    
+
+    <div class="row pt-1">
+        <div class="col-lg-12 col-md-12">
+            <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Receiver</h5>
+            <a type="button" hx-get="/reciver-address-lookup/" hx-target="#dialog" hx-swap="innerHTML" class="float-right text-danger text-bold-front" data-toggle="modal" data-target="modal">Look up in address Book</a>
+        </div>
+    </div>
+   <div id="selected_reciver">
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Company Name:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.company_profile.company_name}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label class="required" for="nameVariable">Address:</label>
+        </div>
+
+        <div class="col-lg-4 pt-1">
+            <textarea name="address" aria-valuemax="" cols="40" rows="10" class="form-control form-control-sm" maxlength="100" id="id_address">{{editbooking.consignee.address}}</textarea>
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Contact/Department:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.contact_person}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Country:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.country}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Mobile:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.mobile_number}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+       
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">City:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.city}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Email:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.email}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">State:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.pickup_point}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+       
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Zip/Postal Code:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.consignee.zip_code}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+        <div class="col-lg-1 pt-1">
+            {{form.save_to_addressbook}}
+        </div>
+        <div class="col-lg-3 pt-1">
+            <label for="check1">Save to address book</label><br>
+        </div>
+
+    </div>
+</div>
+    <div class="row pt-1">
+        <div class=" col-lg-12 col-md-12 ">
+            <div>
+                <h5 class="naqel-text-color border-bottom border-danger text-bold-front ">Shipment Information</h5>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Shipment Type:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.shipment_type}}" name="company_name" class="form-control form-control-sm" maxlength="50" id="id_company_name">
+        </div>
+       
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Pieces:</label>
+        </div>
+        <div class="col-lg-3 pt-1">
+            <input type="text" value="{{editbooking.piece_count}} "name="piece_count" class="form-control form-control-sm" maxlength="50" required="" id="id_piece_count">
+        </div>
+        
+        <div class="col-lg-1 pt-1">
+            <button id="button_dimension" type="button" hx-get="/dimensions/" hx-target="#dialog" hx-swap="innerHTML" class="float-right text-danger text-bold-front" data-toggle="modal" data-target="modal"><b>...</b></button>
+        <!-- <input type="button" value="..." class="form-control form-control-sm" data-toggle="modal"
+                data-target="#exampleModalCenter" name="nameVariable" style="min-width: 40px"
+                aria-describedby="emailHelp" required> -->
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Gross Weight:</label>
+        </div>
+        <div class="col-lg-1 pt-1">
+            <input type="number" value="{{editbooking.gross_weight}}" name="gross_weight" step="any" required="" id="id_gross_weight">
+        </div>
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Chargeable Weight:</label>
+        </div>
+        <div class="col-lg-1 pt-1">
+            <input  type="number" value="{{editbooking.chargable_weight}}" name="gross_weight" step="any" required="" id="id_gross_weight">
+        </div>
+       
+
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Additional Services:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text"  value="{{editbooking.additonal_services}}" name="additonal_services" class="form-control form-control-sm" maxlength="50" id="id_additonal_services">
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Goods Origin:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.goods_origin}}" name="goods_origin" class="form-control form-control-sm" maxlength="50" id="id_goods_origin">
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Customs Value:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="number"  value="{{editbooking.customs_value}}" name="customs_value" class="form-control form-control-sm" step="any" id="id_customs_value">
+        </div>
+       
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Reference:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text"  value="{{editbooking.reference}}" name="reference" class="form-control form-control-sm" maxlength="50" id="id_reference">
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Goods Description:</label>
+        </div>
+        <div class="col-lg-4 pt-1">
+            <input type="text" value="{{editbooking.goods_description}}" name="goods_description" class="form-control form-control-sm" maxlength="50" id="id_goods_description">
+        </div>
+        
+
+        
+        <!-- <div class="col-lg-2 pt-1">
+                <label for="nameVariable" class="form-label">Remarks:</label>
+            </div>
+             <div class="col-lg-4 pt-1">
+                <textarea id="text1"  style="min-height: 70px"></textarea>
+             </div> -->
+
+
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-1 pt-1">
+            {{form.request_for_schedule_pickup}}
+        </div>
+        <div class="col-lg-4 pt-1">
+            <label for="check1">Schedule a pickup for this shipment</label>
+        </div>
+
+    </div>
+
+
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Date:</label>
+        </div>
+        
+        <div class="col-lg-2 pt-1">
+            <input type="date" name="pickup_date" value="2023-04-16" class="form-control" id="id_pickup_date">
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label required">Pickup Time:</label>
+        </div>
+        <div class="col-lg-2 pt-1">
+            <input type="time" name="ready_time" value="00:00:00" class="form-control" id="id_ready_time">
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label"></label>
+            <!-- <label for="nameVariable" class="form-label required">Latest Time:</label> -->
+        </div>
+        <div class="col-lg-2 pt-1">
+            <input type="time" name="Latest_time" value="00:00:00" class="form-control" id="id_Latest_time">
+        </div>
+    </div>
+    <div class="row col-md-12">
+        <div class="col-lg-2 pt-1">
+            <label for="nameVariable" class="form-label">Payment Method</label>
+        </div>
+    </div>
+
+    <div class="col-lg-3 pt-1">
+        <ul id="id_payment_method">
+    <li><label for="id_payment_method_0"><input type="radio" name="payment_method" value="Cash" id="id_payment_method_0">
+ Cash</label>
+
+</li>
+    <li><label for="id_payment_method_1"><input type="radio" name="payment_method" value="Shipper-Account" id="id_payment_method_1">
+ Shipper-Account</label>
+
+</li>
+</ul>
+    </div>
+    <br/>
+    <div class="row col-md-12" >
+        <div class="col-lg-2 pt-1" >
+            <input type="checkbox" id="check1" name="check1" value="00">
+            <label for="check1" >Insurance</label><br>
+        </div>
+        <div  class="row col-lg-4 pt-1" id="Insurance_label">
+            <label for="heynow2"><input type="text" name="insurance" class=" form-control" placeholder="Insurance Value" id="id_insurance"></label>&nbsp;&nbsp;
+            <label for="heynow2"><input type="text" name="declare_value" class="form-control" placeholder="Declare Value" id="id_declare_value"></label>
+        </div>
+    </div>
+
+    <!-- <div class="col-lg-12 col-md-1 text-naqel-blue">
+        <div class="check_div">
+        <input type="checkbox" id="check1" name="check1" value="00">
+        <label for="check1"><b>Insurance</b></label><br>
+        </div>
+        <div class="heynow1_div">
+        </div>
+        <div class="heynow2_div">
+        <label for="heynow2" ><b>{{form.insurance}}</b></label>
+        <label for="heynow2" ><b>{{form.declare_value}}</b></label>
+        <label for="heynow2" ><b>{{form.cust_national_id}}</b></label>
+        </div>
+    </div> -->
+    
+    <div class="col-lg-3 pt-1">
+        <p>Note: Field Marked with <b class="text-danger">*</b> &nbsp; are required</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+        <button type="submit" class="btn naqel-bg-color">Submit</button>
+        <a type="submit" class="btn bg-danger" href="/newbooking/">Clear</a>
+
+    </div>
+    <!-- <div class="float-right mt-5">
+        <input type="hidden" name="booking_id" value="{{booking}}" />
+
+        <input type="hidden" name="pintoservice" value="0" />
+        <input type="checkbox" name="pintoservice" value="1" hx-post="/add-to-favourite/" hx-trigger="change"><b
+            class="text-naqel-blue"> Pin to Favourite</input>
+    </div> -->
+    </div>
+    </div>
+    <!-- All modalas -->
+    <!-- shipper address -->
+    <!-- shipper change Address start -->
+   
+    <div class="modal fade sortable" id="modal" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
+    <div id="dialog" class="modal-dialog" role="document">
+    </div>
+    </div>       
+
+    <!-- shipper change Address end -->
+    <!-- Reciver Lookup Address start -->
+    <div class="modal fade sortable" id="modal" tabindex="-1" role="dialog" aria-labelledby=""
+    aria-hidden="true">
+    <div id="dialog" class="modal-dialog" role="document">
+    </div>
+    </div> 
+    <!-- Reciver Lookup Address End -->
+
+  
+    <!-- modal end for Dimensions -->
+    <!-- All modalas -->
+
+
+</form>
+
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    
+    $("#Insurance_label").hide();
+    checkBox = document.getElementById('check1').addEventListener('click', event => {
+        
+        if(event.target.checked) {
+            $("#Insurance_label").show();
+        }
+        else{
+            $("#Insurance_label").hide();
+        }
+    });
+
+</script>
+{% endblock %}

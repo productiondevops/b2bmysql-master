@@ -1,0 +1,176 @@
+{% extends base_template %}
+{% load static %}
+{% block content %}
+
+
+
+<div class=" bg-white card">
+    <h5 class="card-header naqel-bg-color text-white pb-2">Price Estimator</h5>
+    <div class="card-body">
+
+        <form id="form1" hx-post="{{request.path}}" hx-target="#returnMessage" hx-swap="innerHTML" >
+            {% csrf_token %}
+         
+            <div class="row ">
+                <div class="col-lg-6">
+                    <fieldset class="modal-body">
+                        <p>
+                        <h6>Origin </h3>
+                            </p>
+                            <div class="form-group">
+                                <label>Country:&nbsp; <span class="required"></span></label>
+                                 {{form.shipping_from_country}}
+                            </div>
+                            <div class="form-group">
+                                <label>City <span class="required"> * </span></label>
+                                <select class="form-control form-control-sm" id="OriginCity" name="OriginCity"
+                                    aria-describedby="OriginCity" placeholder="OriginCity">
+                                    <option value=""></option>
+
+                                </select>
+                            </div>
+                    </fieldset>
+                </div>
+                <div class="col-lg-6">
+                    <fieldset class="modal-body">
+                        <p>
+                        <h6>Destination </h3>
+                            </p>
+                            <div class="form-group">
+                                <label>Country:&nbsp; <span class="required"></span></label>
+                                {{form.shipping_to_country}}
+                            </div>
+                            <div class="form-group">
+                                <label>City:&nbsp; <span class="required"></span></label>
+                                <select class="form-control form-control-sm" id="DestinationCity" name="DestinationCity"
+                                    aria-describedby="DestinationCity" placeholder="Destination City">
+                                    <option value=""></option>
+
+                                </select>
+                               
+                                
+                            </div>
+                    </fieldset>
+                </div>
+
+            </div>
+            <div class="row naqel-text-color">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <label class="">
+                        <h2 class="titleText Naqelbluecolor">Shipping Details </h2>
+
+                        <p class=" PD_text text-danger">NOTE:​Max. weight for priority documents is 2 KG</p>
+                        <!-- <p class=" DE_text text-danger">NOTE:This service for parcels or documents above 2 KG</p> -->
+
+                    </label>
+                </div>
+
+                <div class="col-lg-12 col-md-1 ">
+                    <div class="form-group">
+                        <label>Product Type: &nbsp; <span class="required"></span></label>
+                        {{form.product}}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row naqel-text-color">
+                <div class="col-lg-6 col-md-1  ">
+                    <div class="form-group">
+                        <label>Weight:&nbsp; <span class="required">    </span></label>
+                        {{form.Weight}}
+
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-1  ">
+                    <div class="form-group">
+                        <label>Piece Count:&nbsp; <span class="required">    </span></label>
+                        {{form.piece_count}}
+
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-1   ">
+                    <div class="form-group float-right">
+                        <!-- <button type="button" class="btn btn-secondary  text-white" data-dismiss="modal"
+                            onclick="clearForm()">Clear</button> -->
+
+                              
+                        <button type="submit"  class="btn btn-primary naqel-bg-color text-white"
+                            id="btnSubmit">Submit</button>
+                            <button type="button" class="btn btn-primary naqel-bg-color text-white"
+                            id="btnSubmit" onclick="clearForm()">Clear</button>     
+                       
+                    </div>
+                </div>
+                
+
+            </div>
+        </form>
+        <br><br>
+        <div class="modal-footer">
+            <div class="row modal-body">
+                <span id="returnMessage" title="MY ERROR" style="color:red;">
+                </span>
+            </div>
+        </div>
+
+
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script>
+        function onSubmit() {
+
+        }
+        function clearForm() {
+            $("#form1").trigger('reset');
+            $("#returnMessage").text("");
+        }
+
+  
+        function formatDate(date) {
+            return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+        }
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        function postdata(obj,ctype)
+        {   
+            id=$(obj).attr("id")
+            data=$(obj).val()
+            
+            if (ctype =="origin_country")
+            {
+                htmx.ajax("POST",'{{request.path}}?id='+id,{target :"#OriginCity",swap:"innerHTML",values:{data}})
+            }
+            if (ctype =="destination_country")
+            {
+                htmx.ajax("POST",'{{request.path}}?id='+id,{target :"#DestinationCity",swap:"innerHTML",values:{data}})
+            }
+        }
+
+
+
+    </script>
+   <style>
+    .required:after {
+    content:"*";
+    color: red;
+  }
+
+  .titleText {
+    text-align: left;
+    font-size: 22px;
+    line-height: 38px;
+	margin-bottom: 0 !important;
+    color: #06205C;
+}
+   </style>
+
+    {% endblock %}

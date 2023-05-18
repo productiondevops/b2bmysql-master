@@ -1,0 +1,337 @@
+{% extends base_template %}
+{% load static %}
+{% block content %}
+    <div class=" bg-white card">
+        <h5 class="card-header naqel-bg-color text-white pb-2">Track your Shipment</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-7 col-md-1">
+                    <form method="post"  id="result" action="">
+                        {% csrf_token %} {% for field in form %}
+                        <div class="form-group">
+                            <!-- <textarea  class="form-control bg-light"  rows="10"
+                                placeholder="79997351" name="waybills" id="waybills" ></textarea> -->
+                            <!-- <small>*You can Track multiple shipments</small> -->
+                            {{ field }} {% if field.help_text %}
+                            <small  style="display: none;">{{ field.help_text }}</small>
+                            {% endif %} 
+                            <!-- {% for error in field.errors %}
+                            <p  class="text-danger">{{ error }}</p>
+                            {% endfor %}  -->
+                            {% endfor %}  
+                        </div>                                             
+                        <div class="form-group1">
+                            <!-- <input type="button" value="Complaint" class="btn naqel-bg-color float-right" onclick="onSubmit_complaint()"/>
+                            </input> -->
+                            <input type="button" value="Reset" class="btn naqel-bg-red float-right" onclick="on_submit()"/>
+                                </input>
+
+                            <button type="submit" class="btn naqel-bg-color float-right ">
+                                Track</button> 
+                        </div>
+                        </br>
+                        </br>                        
+                    </form>
+                    <div class="form-group">
+                        {% if tracking %} 
+                        {% for data in tracking %}
+                        <div class="form-group">
+                            {% if data.isdeleverd %}
+                            <img src="/static/b2b/assets/img/track3.png" class="img-fluid"/>
+                            {% elif data.is_intransit %}
+                            <img src="/static/b2b/assets/img/track2.png" class="img-fluid"/>
+                            {% elif data.is_pickup %}
+                            <img src="/static/b2b/assets/img/track1.png" class="img-fluid"/>
+                            
+                            {% endif %}
+                            
+                        </div>
+                        
+                        <div class="row">
+                            <table class="table table-striped text-naqel-red bg-gray">
+                                <tbody>
+                                    <tr class="trborder naqel-bg-color text-white">
+                                        <th>Shipment No</th>
+                                        <th>Destination</th>
+                                        <th>Pickup Date</th>
+                                        <th>Expected Delivery</th>
+                                        <th>Status</th>
+                                </tr>
+                                <tr class="trborder">
+                                    <th>{{data.waybill.waybillno}}</th>
+                                    <th>{{data.waybill.destination}}</th>
+                                    <th>{{data.waybill.pickupdate|date:"d-m-Y" }}</th>
+                                    <th>{{data.waybill.expected_delivery|date:"d-m-Y" }}</th>
+                                    <th>{{data.waybill.currentstatus}}</th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <table class="table table-striped">
+                                    <!-- <tr class="trborder naqel-bg-color text-white">
+                                        <th>CURRENT STATUS:</th>
+                                        <th>{{data.waybill.currentstatus}}</th>
+                                    </tr> -->
+                                    <tr class="trborder">
+                                        <td></td>
+                                        <td> 
+                                            <input type="button" value="More Details"  id="toggle" class="btn-primary text-bold-front float-right" onclick="myFunction({{forloop.counter}})">                                            
+                                            </input>
+                                            <input type="button" value="Complaint" class="btn-primary text-bold-front float-right" onclick="onSubmit_complaint()"/>
+                                            </input>
+                                            <div id="{{forloop.counter}}span"></div>
+                                            <div id="{{forloop.counter}}spanless" style="display:none"><span>Fewer Details</span></div>                                        
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div id={{ forloop.counter }} class="card rounded border-dangerTrack naqel-bg-color text-white  p-3 mt-1" style="display:none;">
+                            <h3 class="text-danger-red Redline "><center><b>Tracking Details</center></b></h3>
+
+                            <div class="card-body">
+                                {% for date,item_list in data.dates_and_items.items %}
+                                <div class="row">
+                                    <div class="col-md-12 mb-2">
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-8">
+                                                <p class="text-white font-weight-bold text-white"><font style="font-size: 20px;">{{ date|date:"F d, Y" }}</font></p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <p class="text-white font-weight-bold hide_in_phone">LOCATION</p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <p class="text-white font-weight-bold hide_in_phone">TIME</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% for history in item_list %}
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12">
+                                                <p class="trackMobile text-white" style="font-size: 15px;">{{history.description}}</p>
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                <p class="text-white"><i class="fa fa-map-marker" style="color: red; padding-right: 7px;"></i>{{history.location}}</p>
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                <p class="text-white"><i class="fa fa-clock-o" style="color: red; padding-right: 5px;" aria-hidden="true"></i>{{history.actiontime|time:"g:i A"}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %} 
+                        
+                        {%endif%}
+                            
+                
+                        </div>                 
+                
+                </div>
+            
+                <div class="col-lg-5 col-md-1">                
+                    
+                    <div class="text-align-center"> <p><b class="b-bold bg-gray text-naqel-blue">Track Your Current Bookings</p></b></div>                   
+        
+                        {% for data in records %}
+                        <form method="post" action="">
+                        {% csrf_token %} 
+                        <div class="card mb-1 ">
+                            <div class="card-body bg-light" style="height: 107px;">
+                                <input type="hidden" name="varwaybill" value="{{data.waybillno}}"/>
+                                <h5 class="card-title naqel-text-color"><b>Waybill Number:{{data.waybillno}}</b></h5>
+                                <p class="card-text naqel-text-color">To: {{data.consignee.contact_person}}
+                                </p>
+                                <button type="submit" name="submit_waybill" class="btn-primary-naqel naqel-bg-color float-right mb-2">
+                                    Track</button>
+                            </div>                        
+                        </div> 
+                        </form>
+                        {% endfor %}
+                
+                    </div>            
+                </div>
+            </div>
+        </div>    
+    </div>
+
+<style>
+.btn-primary-naqel {
+    background-color: #06205c !important;
+    color: white;
+    padding: 0.5px 20px!important;
+    float: right;
+}
+
+.hide_in_phone {
+      display:none!important;
+  }
+
+  .border-dangerTrack {
+    border : 1px solid #06295c!important;
+  }
+
+  .border-greenTrack1 {
+    border : 3px solid #06205c!important;
+  }
+
+
+
+</style>
+<script>
+
+function myFunction(divid) {
+    
+
+  var spanx= document.getElementById(divid+"span");
+  var spanless= document.getElementById(divid+"spanless");
+
+  var x = document.getElementById(divid);
+  $(x).toggle('slow');
+
+    var btn = document.getElementById("toggle"); 
+    
+    var strVal = btn.value;
+    if(strVal == "More Details")
+    {
+        btn.value = "Less Details";        
+    }
+
+    if(strVal == "Less Details")
+    {
+         btn.value = "More Details";        
+    }
+
+}
+
+
+</script>
+<script>
+       function  onSubmit_complaint(){
+      window.location.href = '/Enquiries/';
+    }
+
+    function on_submit(){
+        window.location.href = '/tracking/';
+        // alert(document.getElementById("result").innerHTML);
+        // document.getElementById("result").reset();
+        }
+</script>
+ 
+
+
+<style>
+.naqel-bg-green {
+       background-color: #06205c;
+    }
+
+.naqel-bg-red {
+       background-color: rgb(208, 74, 74);
+    }
+.naqel-text-red {
+       color: white;
+    }
+
+    h5 {
+        text-align: left;
+        margin-top: -12px;
+    }
+ 
+
+    .bs-wizard>.bs-wizard-step {
+        padding: 0;
+        position: relative;
+    }
+
+    
+
+    .bs-wizard>.bs-wizard-step>.bs-wizard-dot {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        display: block;
+        background: #06205c;
+        top: 45px;
+        left: 50%;
+        margin-top: -15px;
+        margin-left: -15px;
+        border-radius: 50%;
+    }
+
+    .bs-wizard>.bs-wizard-step>.bs-wizard-dot:after {
+        content: ' ';
+        width: 14px;
+        height: 14px;
+        background: white;
+        border-radius: 50px;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+    }
+
+    .bs-wizard>.bs-wizard-step>.progress {
+        position: relative;
+        border-radius: 0px;
+        height: 8px;
+        box-shadow: none;
+        margin: 20px 0;
+    }
+
+    .bs-wizard>.bs-wizard-step>.progress>.progress-bar {
+        width: 0px;
+        box-shadow: none;
+        background: naqel-bg-color;
+    }
+
+    .bs-wizard>.bs-wizard-step.complete>.progress>.progress-bar {
+        width: 100%;
+    }
+
+    .bs-wizard>.bs-wizard-step.active>.progress>.progress-bar {
+        width: 50%;
+    }
+
+    .bs-wizard>.bs-wizard-step:first-child.active>.progress>.progress-bar {
+        width: 0%;
+    }
+
+    .bs-wizard>.bs-wizard-step:last-child.active>.progress>.progress-bar {
+        width: 100%;
+    }
+
+    .bs-wizard>.bs-wizard-step.disabled>.bs-wizard-dot {
+        background-color: #f5f5f5;
+    }
+
+    .bs-wizard>.bs-wizard-step.disabled>.bs-wizard-dot:after {
+        opacity: 0;
+    }
+
+    .bs-wizard>.bs-wizard-step:first-child>.progress {
+        left: 50%;
+        width: 50%;
+    }
+
+    .bs-wizard>.bs-wizard-step:last-child>.progress {
+        width: 50%;
+    }
+
+    .bs-wizard>.bs-wizard-step.disabled a.bs-wizard-dot {
+        pointer-events: none;
+    }
+    .progress-bar {
+    background-color: #E0E0E0;
+}
+.b-bold{
+    font-size: 20px;
+}
+</style>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% load crispy_forms_tags %}
+    <table class="table mt-2" id="tablist">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">check</th>
+            <th scope="col">WaybillNo</th>
+            <th scope="col">Booking Ref</th>
+            <th scope="col">Company</th>
+            <th scope="col">Origin</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Status</th>
+            <th scope="col">Pickup Date</th>
+            <th scope="col">Weight</th>
+            <th scope="col">Shipemnt Type</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for book in booking_list %}
+            
+            {% if book.status_id == 1 %}
+            
+                <tr>
+                    <td> 
+                        <input name="selectaction" value={{book.pk}} type="checkbox" style="opacity:10;"></input>                         
+                    </td>
+                    <td>{{ book.waybillno }}</td>
+                    <td>{{ book.bookingref }}</td>
+                    <td>{{ book.company_profile.company_name}}</td>
+                    <td>{{ book.shipper.city}}</td>
+                    <td>{{ book.consignee.city}}</td>
+                    <td>{{ book.booking_status}}</td>
+                    <td>{{ book.pickup_date}}</td>
+                    <td>{{ book.gross_weight}}</td>
+                    <td>{{ book.shipment_type}}</td>
+                    <td>
+                        {% if booking_list.booking_status == "Cancel-Booking" %} &nbsp;
+                        {% else %}
+                        <ul class="navbar-nav">
+                                    <li class="nav-item  dropdown">
+                                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                   
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                      <a class="dropdown-item" style="color: blue;"{% if book.booking_status == "Picked-Up" %} display:None;{%endif%}"  href="{% url 'home:booking'  book.pk %}"><i class="fa fa-edit fa-2x mr-2 bg-blue"></i> Edit</a>
+                                      <a class="dropdown-item" style="color: red;"{% if book.booking_status == "Picked-Up" %} display:None;{%endif%}"   hx-get="{% url 'home:deletebooking' book.pk %}" hx-confirm="Are you sure you want to delete this customer?" hx-target="#dialog" href="{% url 'home:deletebooking' book.pk %}" ><i class="fa fa-trash fa-2x mr-2"></i> Delete</a>
+                                      <a class="dropdown-item" style="color: blue;"{% if book.booking_status == "Picked-Up" %} display:None;{%endif%}"  hx-get="/reschedulebooking/{{book.pk}}" hx-target="#dialog" href="/reschedulebooking/{{book.pk}}"><i class="fa fa-calendar  fa-2x mr-2 mr-2"></i>Reshedule</h5></a>
+                                      <a class="dropdown-item" style="color: blue;"  href="/confirm-booking/{{book.id}}"><i class="fa fa-eye fa-2x mr-2"></i>View</h5></a>
+                                    </div>
+                                  </li>
+                          </ul>
+                          
+                         {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+                {% endfor %}
+        </tbody>
+      </table>
+      
+      <!-- pagination starts -->
+      <nav aria-label="...">
+        <ul class="pagination flex-wrap justify-content-center">
+          <li class="page-item disabled">
+            {% if booking_list.has_previous %}
+              <li class="page-item">
+                <a class="page-link" hx-get="{% url 'home:booking-list' %}?page={{ booking_list.previous_page_number }}" 
+                hx-target="#booking_list" hx-swap="innerHTML"
+                href="{% url 'home:booking-list' %}?page={{ booking_list.previous_page_number }}">⇇</a>
+              </li>
+            {% endif %}
+            {% if booking_list.number > 3 %}
+              <li class="page-item">
+                <a class="page-link" 
+                hx-get="{% url 'home:booking-list' %}?page=1"
+                hx-target="#booking_list" hx-swap="innerHTML"
+                href="{% url 'home:booking-list' %}?page=1">1</a>
+              </li>
+            {% endif %}
+            {% if booking_list.number > 4 %}
+                <li class="page-item">
+                <span class="page-link">....</span>
+                </li>
+            {% endif %}
+          </li>
+
+          {% for i in booking_list.paginator.page_range %}
+            {% if booking_list.number == i %}
+              <li class="page-item active">
+                <span class="page-link">
+                  {{ i }}
+                  <span class="sr-only"></span>
+                </span>
+              </li>
+              {% elif i > booking_list.number|add:'-3' and i < booking_list.number|add:'3' %}
+                <li class="page-item">
+                  <a class="page-link" 
+                  hx-get="{% url 'home:booking-list' %}?page={{ i }}"
+                  hx-target="#booking_list" hx-swap="innerHTML"
+                  href="{% url 'home:booking-list' %}?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endif %}
+          {% endfor %}
+
+          {% if booking_list.has_next %}
+            {% if booking_list.number < booking_list.paginator.num_pages|add:'-3' %}
+                <li class="page-item">
+                    <span class="page-link">....</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" 
+                    hx-get="{% url 'home:booking-list' %}?page={{ booking_list.paginator.num_pages }}"
+                    hx-target="#booking_list" hx-swap="innerHTML"
+                    href="{% url 'home:booking-list' %}?page={{ booking_list.paginator.num_pages }}">{{ booking_list.paginator.num_pages }}</a>
+                </li>
+            {% elif booking_list.number < booking_list.paginator.num_pages|add:'-2' %}
+                <li class="page-item">
+                    <a class="page-link" 
+                    hx-get="{% url 'home:booking-list' %}?page={{ booking_list.paginator.num_pages }}"
+                    hx-target="#booking_list" hx-swap="innerHTML"
+                    href="{% url 'home:booking-list' %}?page={{ booking_list.paginator.num_pages }}">{{ booking_list.paginator.num_pages }}</a>
+                </li>
+            {% endif %}  
+            <li class="page-item">
+              <a class="page-link" 
+              hx-get="{% url 'home:booking-list' %}?page={{ booking_list.next_page_number }}"
+              hx-target="#booking_list" hx-swap="innerHTML"
+              href="{% url 'home:booking-list' %}?page={{ booking_list.next_page_number }}"> ⇉</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <!-- pagination end -->
+</div>
+

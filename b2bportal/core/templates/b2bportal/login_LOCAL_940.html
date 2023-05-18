@@ -1,0 +1,182 @@
+{% extends "Shared/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<!-- Material Design Bootstrap -->
+<link href="{% static 'css/mdb.min.css' %}" rel="stylesheet" media="print" onload="this.media='all'">
+
+<link rel="stylesheet" href="{% static 'css/intlTelInput.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{% static 'js/intlTelInput.js' %}"></script>
+ 
+<section class="view intro-2" style="background-color: white;">
+	<!-- style="background-image: url(&quot;{% static 'images/logintruck.jpg' %}&quot;); -->
+	<div class="mask h-90 d-flex ">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-10 col-sm-12 mt-120">
+					<!-- <img src="{% static 'images/trucklogin.jpg' %}"/> -->
+					<img src="{% static 'images/trucklogin.jpg' %}" class="img-fluid" alt="My image" />
+
+				</div>
+				<div class="col-lg-4 col-md-10 col-sm-12 mt-120">
+
+					<div class="card wow fadeIn" data-wow-delay="0.3s">
+						<div class="card-body bg-naqel-gray1">
+							<form method="post">
+								{% csrf_token %}
+								{% if messages %}
+								<div class="alert alert-danger alert-dismissible col-12 mx-1" role="alert">
+									{% for message in messages %}
+									{{ message }}
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									{% endfor %}
+								</div>
+								{% endif %}
+								<div class="md-form p-0">
+
+									{{form.username}}
+									<label for="id_username">Client ID:</b></label>
+									
+								</div>
+								<div class="md-form p-0">
+
+									{{form.password}}
+
+									<label for="id_password">Password:</label>
+								</div>
+
+
+								<!-- <div class="text-center" style="margin-bottom: 12px;">
+									<div class="text-left"><a target="_blank"
+											href="#">Forgot/Reset
+											Password</a>
+									</div> -->
+									<div class="text-center" style="margin-bottom: 12px;">
+										<div class="text-left"><a target="_blank"
+												href="/password_reset">Forgot/Reset
+												Password</a>
+										</div>
+								</div>
+								<!-- <input type="checkbox" value="lsRememberMe"> <label
+									>Remember me</label> -->
+                                 <div>
+								<input type="checkbox" value="lsRememberMe" id="rememberMe" style="opacity:10;"> </input><label for="rememberMe"  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Remember me</label>
+							    </div>
+								<button
+									class="red-gradient header_btn white-text cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-squar "
+									type="submit" onclick="lsRememberMe()"><span class="text-white">Login</span></button>
+
+								<hr>
+								<div class="text-left black-text">Not Registered? <a class="red-text pr-4"
+										href="/Registeration/">Register
+										Now
+									</a>
+
+
+								</div>
+							</form>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+ 
+<style>
+	.md-form .form-control {
+		color: black;
+	}
+
+	.md-form input:not([type]),
+	.md-form input[type="text"]:not(.browser-default),
+	.md-form input[type="password"]:not(.browser-default),
+	.md-form input[type="email"]:not(.browser-default),
+	.md-form input[type="url"]:not(.browser-default),
+	.md-form input[type="time"]:not(.browser-default),
+	.md-form input[type="date"]:not(.browser-default),
+	.md-form input[type="datetime"]:not(.browser-default),
+	.md-form input[type="datetime-local"]:not(.browser-default),
+	.md-form input[type="tel"]:not(.browser-default),
+	.md-form input[type="number"]:not(.browser-default),
+	.md-form input[type="search"]:not(.browser-default),
+	.md-form input[type="phone"]:not(.browser-default),
+	.md-form input[type="search-md"],
+	.md-form textarea.md-textarea {
+		-webkit-box-sizing: content-box;
+		box-sizing: border-box !important;
+		background-color: white;
+		border: none;
+		border-bottom: 1px solid #ced4da;
+		border-radius: 0;
+		outline: aqua;
+
+	}
+</style>
+
+<script>
+	var input = document.querySelector("#phone");
+	var iti = window.intlTelInput(input, ({
+		initialCountry: "auto",
+		geoIpLookup: function (success, failure) {
+			$.get("https://ipinfo.io", function () { }, "jsonp").always(function (resp) {
+				var countryCode = (resp && resp.country) ? resp.country : "us";
+				success(countryCode);
+				console.log(countryCode);
+			});
+		},
+	}));
+
+	iti.promise.then(function () {
+		var countryData = iti.getSelectedCountryData();
+		console.log(countryData);
+		$('#phone').val("+" + countryData.dialCode);
+	});
+
+	$(document).ready(function () {
+		$('.iti__flag-container').click(function () {
+			var countryCode = $('.iti__selected-flag').attr('title');
+			var countryCode = countryCode.replace(/[^0-9]/g, '')
+			$('#phone').val("");
+			$('#phone').val("+" + countryCode + "" + $('#phone').val());
+		});
+	});
+
+
+</script>
+<!-- Remember me js code -->
+<script>
+    const rmCheck = document.getElementById("rememberMe"),
+	    emailInput = document.getElementById("id_username");
+		
+		
+		
+	if (localStorage.checkbox && localStorage.checkbox !== "") {
+		rmCheck.setAttribute("checked", "checked");
+		emailInput.value = localStorage.username;
+	} else {
+		rmCheck.removeAttribute("checked");
+		emailInput.value = "";
+	}
+
+	function lsRememberMe() {
+		if (rmCheck.checked && emailInput.value !== "") {
+			localStorage.username = emailInput.value;
+			localStorage.checkbox = rmCheck.value;
+			
+		} else {
+			localStorage.username = "";
+			localStorage.checkbox = "";
+		}
+	}
+
+</script> 
+
+{% endblock %}

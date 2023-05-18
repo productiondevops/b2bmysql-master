@@ -1,0 +1,327 @@
+{% load static %}
+{% load i18n %}
+<!--header start-->
+	<!--suppress ALL -->
+
+<header id="masthead" class="header cmt-header-style-01">
+  <!-- cmt-topbar-wrapper -->
+  <div class="cmt-topbar cmt-bgcolor-grey cmt-topbar-wrapper clearfix">
+	<div class="container">
+		<div class="cmt-topbar-content">
+			<div class="topbar-right text-right top-contact">
+				<ul class="top-contact cmt-textcolor-grey cmt-highlight-right">
+					<a href="{% url urllink|add:':download_app' %}" target="_blank"><li class="list-inline-item text-white redhover">حمل تطبيق ناقل</li></a>
+				</ul>
+				<div class="topbar-btn d-inline-block">
+					<a href="{% url urllink|add:':contactus' %}" class=" Arabic_font cmt-btn btn-inline cmt-btn-size-sm cmt-icon-btn-right ">اعثر على ناقل<i class="ti ti-arrow-left"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="topbar-left text-left">
+			<ul class="top-contact arnavbaricon">
+				{% for topheader in headerdata%}
+				<li><strong class="cmt-textcolor-grey font-weight-500"><i class="fa fa-phone cmt-textcolor-darkgrey"></i>تحدث إلى أحد ممثلي خدمة العملاء 
+				</strong> <span class="tel-no "> {{topheader.ARnaqelNumber}}</span></li>
+				<li>
+				{%endfor%}
+					<i class="fa fa-user"></i>
+					<a href="https://infotrack.naqelexpress.com/InfoTrack/View/Login.aspx" target="_blank" class="cmt-textcolor-grey font-weight-500">موظفيين ناقل</a>
+				</li>
+				<!-- <li>
+					<i class="fa fa-user-plus"></i>
+					<a href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerLogin.aspx" target="_blank" class="cmt-textcolor-grey font-weight-500">Business User</a>
+				</li> -->
+
+				<li>
+					<div class="cmt-social-links-wrapper list-inline">
+						<ul class="social-icons">
+							
+							<li>
+								<a class="tooltip-bottom" target="_blank" href="https://twitter.com/naqelexpr?lang=en" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
+							</li>
+							<li>
+								<a class=" tooltip-bottom" target="_blank" href="https://www.instagram.com/naqelexpr/" data-tooltip="Instagram"><i class="fa fa-instagram"></i></a>
+							</li>
+							<li>
+								<a class="tooltip-bottom" target="_blank" href="https://www.facebook.com/NaqelExpr" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
+							</li>
+							<li>
+								<a class="tooltip-bottom" target="_blank" href="https://bit.ly/2Wzzoeg"  data-tooltip="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+							</li>
+
+					
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div><!-- cmt-topbar end -->
+
+
+		<div id="site-header-menu" class="site-header-menu">
+			<div class="site-header-menu-inner cmt-stickable-header">
+				<div class="container">
+					<div class="row">
+						<div class="col">
+							<!--site-navigation -->
+							<div class="site-navigation d-flex flex-row align-items-center">
+								<!-- site-branding -->
+								<div class="site-branding site-brandingAR mr-auto ml-auto">
+
+									<a class="home-link" href="{% url urllink|add:':home' %}" title="NAQEL" rel="home">
+
+										<img id="logo-img" class="img-center standardlogo imgar"
+											 src="{% static 'images/logo with logistic ar.jpg' %}" alt="logo-img">
+
+										<img id="logo-dark" class="img-center stickylogo imgar"
+											 src="{% static 'images/logo with logistic ar.jpg' %}" alt="logo-img">
+									</a>
+
+								</div><!-- site-branding end -->
+								<div class="btn-show-menu-mobile  menubarAR  menubar--squeeze">
+                                        <span class="menubar-box">
+                                            <span class="menubar-inner"></span>
+                                        </span>
+								</div>
+								<!-- menu -->
+								<nav class="main-menu menu-mobile" id="menu">
+									<ul class="menu">
+										<li
+										{% if '/' == request.path %}
+										 class="mega-menu-item active"
+										{% else %}
+										  class="mega-menu-item"
+										{% endif %}>
+										<a  class="mega-menu-link Arabic_font">
+											<span class="navmenuconstcolor">الشحن </span></a>
+
+										<ul class="mega-submenu navmenuconstcolor ">
+											<li class="active"><a class="navmenuconstcolor" href="{% url urllink|add:':ratecalculator' %}">تقدير سعر الشحن </a></li>
+											<li><a  href="{% url urllink|add:':Pickup' %}">تحديد موعد الشحن</a></li>
+											<li><a  href="{% url urllink|add:':TransitTime' %}"> مدة الشحن</a></li>
+										
+										</ul>
+										</li>
+
+
+										<li class="mega-menu-item"><a class="mega-menu-link Arabic_font">
+											<span class="navmenuconstcolor"> تتبع الشحنات</span></a>
+											<ul class="mega-submenu">
+												<form id="cmt-contactform-nav" autocomplete="off" class="pt-10" method="post" action="{% url urllink|add:':tracking' %}">
+												 {% csrf_token %}
+												<div class="pl-10 pr-10 pb-10">
+													<b class="navmenuconstcolor">تتبع شحنتك</b>
+												</div>
+												<li class="pl-10 pr-10">
+													<input type="text"  id="tracktext" name="waybills" placeholder="رقم الشحنة" required="">
+												</li>
+												<li>
+													<div class="pl-10 pr-10 pb-10">
+													<button class="submit  cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-radius w-100"
+																		type="submit">{% trans "Track" %}
+													</button></div>
+												</li>
+												</form>
+											</ul>
+										</li>
+
+
+										<li class="mega-menu-item"><a href="{% url urllink|add:':service/' %}" class="mega-menu-link Arabic_font">
+											<span class="navmenuconstcolor">الخدمات</span>
+											</a>
+											<ul class="mega-submenu navmenuconstcolor">
+												<li><a href="{% url urllink|add:':service/Ecommerce/' %}">التجارة الإلكترونية</a></li>
+												<li ><a href="{% url urllink|add:':service/Express/' %}"> الشحن السريع</a></li>
+												<li><a href="{% url urllink|add:':service/Warehouse/' %}"> التخزين</a></li>
+												<li><a href="{% url urllink|add:':service/Freight/' %}"> الشحن الجوي والبحري</a></li>
+												<li><a href="{% url urllink|add:':service/Logistics/' %}">الحلول اللوجستية المتخصصة</a></li>
+												<li><a href="{% url urllink|add:':service/Pharma/' %}"> فارما</a></li>
+												<li><a href="{% url urllink|add:':service/Gateway/' %}">التخليص الجمركي </a></li>
+											</ul>
+										</li>
+
+									
+
+
+										<li {% if '/aboutus' == request.path %}
+										 class="mega-menu-item active"
+										{% else  %}
+										  class="mega-menu-item "
+										{% endif %}
+											><a  class="mega-menu-link Arabic_font" >
+										<span class="navmenuconstcolor">نبذة عن ناقل</span>
+										</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												<li class="active "><a href="{% url urllink|add:':aboutus' %}"> قصتنا </a></li>
+											<!-- 	<li class=""><a  href="{% url 'Technology' %}">تقنياتنا</a></li> -->
+												<li><a href="{% url urllink|add:':Quality' %}">سياسة الحفاظ على الجودة</a></li>
+												<li><a href="{% url urllink|add:':CustomerCharter' %}">ميثاق خدمة العملاء</a></li>
+											
+											
+												<!-- <li><a href="faq.html">Faq</a></li>
+												<li class="mega-menu-item"><a href="shop.html" class="mega-menu-link">Shop</a>
+													<ul class="mega-submenu">
+														<li><a href="product-details.html">Single Product Details</a>
+														</li>
+														<li><a href="cart.html">Cart</a></li>
+														<li><a href="checkout.html">Checkout</a></li>
+													</ul>
+												</li> -->
+											</ul>
+										</li>
+									
+										<li class="mega-menu-item">
+											<a  class="mega-menu-link Arabic_font">
+												<span class="navmenuconstcolor"> تواصل معنا</span>
+												</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												
+												<li class=""><a href="{% url urllink|add:':contactus' %}">تواصل معنا</a></li> 
+												<li class="mega-menu-item"><a href="#" class="mega-menu-link">الدعم والمساعدة</a>
+													<ul class="mega-submenu">
+													<!-- 	<li class=""><a  href="{% url 'ClaimProcess' %}">اجراءات التعويض</a></li> -->
+														<li class=""><a target="_blank" href="{% url urllink|add:':ClaimRules' %}">ارشادات اجراءات المطالبات</a></li>
+														<li><a target="_blank" href="{% url urllink|add:':Terms' %}">الخدمات والشروط</a></li>
+														<li class=""><a  href="{% url urllink|add:':FAQ' %}">الأسئلة الشائعة</a></li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+										{% if urllink == 'sa'%}
+										<li  class="mega-menu-item">
+											<a target="_blank" href="https://register.naqelexpress.com/" class="navmenuconstcolor Arabic_font"> انظم لنا كسائق</a>
+										</li>
+										{%endif%}
+
+										
+										{% if request.user_agent.is_mobile %}
+										{% if user.is_authenticated %}
+
+										<li {% if '/' == request.path %}
+										 class="mega-menu-item active"
+										{% else %}
+										  class="mega-menu-item"
+										{% endif %}>
+											<a href="{% url urllink|add:':myprofile' %}" class="navmenuconstcolor">حسابي</a>
+										</li>
+										{% else %}
+										<li class="mega-menu-item"><a class="mega-menu-link Arabic_font">
+											<span class="navmenuconstcolor">تسجيل الدخول</span>
+											</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												<li><a href="{% url urllink|add:':login' %}">تسجيل دخول الأفراد</a></li>
+										  		<li><a target="_blank" href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerLogin.aspx">تسجيل دخول الأعمال</a></li>
+												
+											</ul>
+										</li>
+										{% endif %}
+										{% endif %}
+										
+										{% get_current_language as LANGUAGE_CODE %}
+										<li class="mega-menu-item">
+											<a class="mega-menu-link">
+												<i style="font-size: 20px; color: #06205C;" class="flaticon-logistics"></i>
+												<span class="navmenuconstcolor">{{urllink|upper }}</span>
+												</a>
+											<ul class="mega-submenu navmenuconstcolor ">
+												{% get_available_languages as LANGUAGES %}
+												<li class="mega-menu-item"><a href="{% url 'sa:home' %}" class="mega-menu-link">المملكة العربية السعودية </a>
+													<ul class="mega-submenu">
+														{% for lang in LANGUAGES %}
+														<li class=""><a href='/{{lang.0}}/sa/{{request.get_full_path|slice:"7:"}}'>{{lang.1}}</a></li>
+														{% endfor %} 
+													</ul>
+												</li>
+												<li class="mega-menu-item"><a href="{% url 'ae:home' %}" class="mega-menu-link">الإمارات العربية المتحدة</a>
+													<ul class="mega-submenu">
+														{% for lang in LANGUAGES %}
+														<li class=""><a href='/{{lang.0}}/ae/{{request.get_full_path|slice:"7:"}}'>{{lang.1}}</a></li>
+														{% endfor %} 
+													</ul>
+												</li>
+											</ul>
+										</li>
+									
+										<!-- {% get_current_language as LANGUAGE_CODE %}
+										
+										<li class="mega-menu-item"><a  class="mega-menu-link Arabic_font">
+											<span class="navmenuconstcolor">{{ LANGUAGE_CODE | upper }}</span>
+											</a>
+											<ul class="mega-submenu navmenuconstcolor">
+												 {% get_current_language as LANGUAGE_CODE %}
+												{% get_available_languages as LANGUAGES %}
+												{% get_language_info_list for LANGUAGES as languages %}
+												{% for language in languages %}
+												<li><a href='/{{ language.code }}/{{request.get_full_path|slice:"4:"}}'>{{ language.name_local }}</a></li>
+												{% endfor %}
+											</ul>
+										</li> -->
+									</ul>
+								</nav>
+
+								<div class="header_extra header_extraAR d-flex flex-row align-items-center justify-content-end">
+
+									<div class="header_search mobilelogin mr-10">
+									   <a href="{% url urllink|add:':login' %}"><i class="fa fa-user cmt-textcolor-skincolor "></i></a>
+								   </div>
+							   <!-- 	<div class="header_cart">
+									   <a href="cart.html" class="button-cart">
+										   <div class="cart_icon"><i class="ti-shopping-cart"></i></div>
+										   <div class="cart_count">0</div>
+									   </a>
+								   </div>  -->
+								   {% if user.is_authenticated %}
+								   <div class="header_btn">
+									   <a class="cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor Arabic_font text-white"
+										  href="{% url urllink|add:':myprofile' %}">حسابي</a>
+								   </div>
+								   {% else %}
+
+								   <div class="dropdown1">
+									<div class="header_btn">
+									<a class="cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-radius Arabic_font text-white"
+									  >تسجيل الدخول</a>
+									</div>
+									<div class="dropdown1-content">
+									  <li><a href="{% url urllink|add:':login' %}">تسجيل دخول الأفراد</a></li>
+									  <li><a target="_blank" href="https://infotrack.naqelexpress.com/ClientInfoTrack/View/CustomerLogin.aspx">تسجيل دخول الأعمال</a></li>
+									  
+									</div>
+								  </div>
+								  <!--  <div class="header_btn">
+									   <a class="cmt-btn cmt-btn-size-md cmt-btn-shape-square cmt-btn-style-fill cmt-btn-color-skincolor but-radius"
+										  href="{% url 'login' %}">تسجيل الدخول</a>
+								   </div> -->
+								   {% endif %}
+							   </div> 
+							
+								<div class="header_extra header_extraAR cmt-textcolor-white d-flex flex-row align-items-center justify-content-end">
+
+									
+								
+								</div>
+
+								<!--Booktstrap start-->
+								<!-- Example single danger button -->
+
+								<!--bootstrap end-->
+							</div><!-- site-navigation end-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- site-header-menu end-->
+	</header>
+<!-- header end-->
+
+
+<!-- Floating SPL  -->
+<div class="float-sm">
+
+	<div class="fl-fl fl-fl-ar float-fb">
+		<img src="{% static 'images\SPL_Logo.svg' %}" alt="" height="40px" width="36px">
+		<a style="padding-right: 5px" class="" href="https://splonline.com.sa/ar/national-address-1/" target="_blank">حدث عنوانك الوطني</a>
+	  </div>
+</div>
+<!-- Floating SPL -->

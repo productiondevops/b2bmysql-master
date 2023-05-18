@@ -1,0 +1,113 @@
+{% extends "b2bportal/base.html" %}
+{% load static %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="modal-content" style="width: 75.0em">
+    <div class="modal-header" style="background-color:#06205C; height: 80px; margin-top: -3px;">
+        <h5 class="modal-title" style="color: white;" id="exampleModalLabel">
+           
+                <h3 style="line-height: 2em;"><b>Booking No # {{booking.bookingref}}</h3></b>
+            </h5>
+        <!-- <button type="button" class="close p-2 naqel-text-color"  data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+       
+    </div>
+    <div class="container">
+        <form action="/printbooking/" method="POST">
+          {% csrf_token %}          
+        <div class="row">
+            <div class="column w-100 naqel-text-color" >
+                {% for w in waybills %}
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm">
+                            <b>Waybill :</b>
+                        </div>
+                        
+                        <div class="col-sm text-naqel-blue">
+                            <input name="selectaction" value="{{w.pk}}" type="hidden" />
+                        <b>{{w.waybillno}}</b>
+                        </div>
+                        <div class="col-sm ">
+                        <b>Contact :</b>
+                        </div>
+                        <div class="col-sm text-naqel-blue">
+                        <b>{{w.consignee.contact_person}}</b>
+                        </div> 
+                        <div class="col-sm">
+                        <b>Destination :</b>
+                        </div>
+                        <div class="col-sm text-naqel-blue">
+                            <b>{{w.consignee.city}}</b>
+                        </div>
+                        <div class="col-sm">
+                        <b>Piece Count :</b>
+                        </div>
+                        <div class="col-sm text-naqel-blue">
+                        <b>{{w.piece_count}}</b>
+                        </div>
+                    </div>
+                     
+                </li>
+                {% endfor %}
+              
+            </div>
+          </div>
+        <div class="row ">
+        <div class="col-lg-8">
+            <a class="btn btn-successpage-pdf right-side naqel-bg-color btn mt-2" href="{% url 'home:booking' booking.id %}">
+                <span class="text-white">Add More Booking <i class="fa fa-info-circle"></i></span>
+              </a>
+        </div>
+        <div class="col-lg-4 form-inline">
+            <div class="input-group">
+               
+                    <div class="dropdown btn-primary text-white mt-2">
+                      <a type="button" id="dropdownMenuButton" formtarget="_blank" class="text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <b><i class="fa fa-file-pdf-o text-naqel-red"></i></b>&nbsp;&nbsp;</i>Print Waybill 
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="will-change: transform; position: absolute; transform: translate3d(-48px, 33px, 0px); top: 0px; left: 0px;" x-placement="bottom-start">
+                        <button type="submit" name="print-sticker-label" formtarget="_blank" class="dropdown-item" href="#">Naqel Label</button>
+                        <button type="submit" name="print-sticker-A5" formtarget="_blank" class="dropdown-item" href="#">Label Sticker</button>
+                        <button type="submit" name="print-sticker-A4" formtarget="_blank" class="dropdown-item" href="#">A4 Waybill</button>
+                      </div>
+                    </div>&nbsp;
+                  
+               
+            </div>
+       
+            <a type="button" class="dropdown btn-primary text-white mt-1" style="width: 150px;" href="/booking/">
+                Back
+            </a>
+   
+        </div>
+        </div> 
+    </form>
+    </div>
+   
+</div>
+
+<script>
+    $('.carousel').carousel({
+        interval: 0
+    })
+</script>
+
+
+
+
+
+
+
+
+<!-- <h1>Booking Successfull</h1>
+<button><a href="http://127.0.0.1:8000/dashboard/">
+<p>Booking Successfull {{booking.bookingid}}</p>
+</a></button> -->
+
+{% endblock %}
